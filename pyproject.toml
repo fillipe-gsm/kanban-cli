@@ -6,6 +6,7 @@ readme = "README.md"
 requires-python = ">=3.9"
 dependencies = [
     "dynaconf>=3.2.11",
+    "peewee>=3.18.2",
 ]
 
 [dependency-groups]
