@@ -1,2 +1,4 @@
 default_db_name = "kanban.db"
+task__title_max_length = 50
 category__name_max_length = 50
+statuses = ["To-do", "In progress", "Review", "Done"]
