@@ -11,3 +11,6 @@ wheels/
 
 # Ignore dynaconf secret files
 .secrets.*
+
+# Ignore test database files
+*.db
