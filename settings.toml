@@ -1,1 +1,2 @@
 default_db_name = "kanban.db"
+category__name_max_length = 50
