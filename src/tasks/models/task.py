@@ -43,3 +43,14 @@ class Task(BaseModel):
     def created_at_str(self) -> str:
         """Human-readable visualization of creation date"""
         return self.created_at.strftime("%Y-%m-%d %H:%M")
+
+    @staticmethod
+    def promote(task_ids: list[int]) -> None:
+        """Move up task status, truncating at the highest one"""
+        max_status_level = len(Task.STATUS_CHOICES) - 1
+
+        query = Task.update(
+            status=pw.fn.MIN(Task.status + 1, max_status_level)
+        ).where(Task.id.in_(task_ids))
+
+        query.execute()
