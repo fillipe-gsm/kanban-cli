@@ -1,5 +1,9 @@
+from src.app.app import create_app
+
+
 def main():
-    print("Hello from kanban-cli!")
+    app = create_app()
+    app()
 
 
 if __name__ == "__main__":
