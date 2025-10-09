@@ -69,3 +69,40 @@ def test_can_create_task_with_details(tmp_db):
     task = Task.create(title="buy milk", details=details)
 
     assert task.details == details
+
+
+def test_group_by_status(tmp_db):
+    """Tasks must be grouped by status and sorted by creation date"""
+    cat1 = Category.create(name="cat1")
+    cat2 = Category.create(name="cat2")
+    # Notice some tasks have categories and some don't, and all of them must be
+    # listed
+    task1 = Task.create(
+        title="t1", status=0, created_at=datetime(2020, 1, 6), category=cat1
+    )
+    task2 = Task.create(title="t2", status=0, created_at=datetime(2020, 1, 5))
+    task3 = Task.create(title="t3", status=2, created_at=datetime(2020, 1, 4))
+    task4 = Task.create(title="t4", status=3, created_at=datetime(2020, 1, 3))
+    task5 = Task.create(title="t5", status=3, created_at=datetime(2020, 1, 2))
+    task6 = Task.create(
+        title="t6", status=1, created_at=datetime(2020, 1, 1), category=cat2
+    )
+
+    expected_tasks_by_status = {
+        0: [task2, task1],
+        1: [task6],
+        2: [task3],
+        3: [task5, task4],
+    }
+
+    tasks_by_status = Task.group_by_status()
+
+    assert tasks_by_status == expected_tasks_by_status
+
+
+def test_group_by_status__no_todos(tmp_db):
+    tasks_by_status = Task.group_by_status()
+
+    expected_tasks_by_status = {0: [], 1: [], 2: [], 3: []}
+
+    assert tasks_by_status == expected_tasks_by_status

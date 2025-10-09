@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from datetime import datetime
 
 import peewee as pw
@@ -43,6 +45,25 @@ class Task(BaseModel):
     def created_at_str(self) -> str:
         """Human-readable visualization of creation date"""
         return self.created_at.strftime("%Y-%m-%d %H:%M")
+
+    @staticmethod
+    def group_by_status() -> dict[str, list[Task]]:
+        """List all existing tasks by status and sorted by creation date"""
+        tasks = (
+            Task.select()
+            .join(
+                Category,
+                on=(Task.category == Category.id),
+                join_type=pw.JOIN.LEFT_OUTER,
+            )
+            .order_by(Task.created_at)
+        )
+
+        tasks_by_status = {i: [] for i, _ in enumerate(settings.statuses)}
+        for task in tasks:
+            tasks_by_status[task.status].append(task)
+
+        return tasks_by_status
 
     @staticmethod
     def promote(task_ids: list[int]) -> None:
