@@ -10,6 +10,7 @@ class Category(BaseModel):
         constraints=[
             pw.Check(f"length(name) <= {settings.category__name_max_length}")
         ],
+        unique=True,
     )
 
     def __str__(self) -> str:

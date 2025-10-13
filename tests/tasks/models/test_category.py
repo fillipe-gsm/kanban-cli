@@ -22,3 +22,13 @@ def test_cannot_create_category_with_long_name(tmp_db):
         Category.create(name=long_name)
 
     assert Category.select().count() == 0, "Sanity check: still no categories"
+
+
+def test_cannot_create_repeated_categories(tmp_db):
+    Category.create(name="category")  # works
+
+    with pytest.raises(pw.IntegrityError):
+        # Attempting to create repeated category fails
+        Category.create(name="category")
+
+    Category.create(name="other category")  # but can create new ones
