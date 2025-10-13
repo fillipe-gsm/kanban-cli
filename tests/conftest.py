@@ -2,12 +2,13 @@ from collections.abc import Iterator
 
 import peewee as pw
 import pytest
+from prompt_toolkit.application import create_app_session
 from prompt_toolkit.input import create_pipe_input
 from prompt_toolkit.output import DummyOutput
+from prompt_toolkit.shortcuts.prompt import PromptSession
 
 from src.tasks.models.category import Category
 from src.tasks.models.task import Task
-from src.tasks.prompts.session import create_session
 
 TEST_DB = pw.SqliteDatabase(":memory:")
 MODELS = [Category, Task]
@@ -32,5 +33,6 @@ def mocked_prompt_input():
 
 
 @pytest.fixture
-def mocked_session(mocked_prompt_input):
-    yield create_session(input_=mocked_prompt_input, output=DummyOutput())
+def mock_app_session(mocked_prompt_input):
+    """Returns a context manager that can be used to mock a call to a prompt"""
+    return create_app_session(input=mocked_prompt_input, output=DummyOutput())

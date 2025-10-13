@@ -2,22 +2,19 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from prompt_toolkit.shortcuts import prompt
 from prompt_toolkit.validation import ValidationError, Validator
 
 from config import settings
 
 if TYPE_CHECKING:
     from prompt_toolkit.document import Document
-    from prompt_toolkit.shortcuts import PromptSession
 
 
 class TitlePrompt:
-    def __init__(self, session: PromptSession) -> None:
-        self._session = session
-
     def prompt(self) -> str:
         """Pick task title from user"""
-        return self._session.prompt(
+        return prompt(
             "Title: ",
             validator=TitleValidator(),
             validate_while_typing=False,
