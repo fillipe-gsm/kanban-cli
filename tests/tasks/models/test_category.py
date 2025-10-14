@@ -32,3 +32,13 @@ def test_cannot_create_repeated_categories(tmp_db):
         Category.create(name="category")
 
     Category.create(name="other category")  # but can create new ones
+
+
+def test_category_names(tmp_db):
+    Category.create(name="category 1")
+    Category.create(name="category 2")
+    Category.create(name="category 3")
+
+    expected_category_names = ["category 1", "category 2", "category 3"]
+
+    assert Category.category_names() == expected_category_names

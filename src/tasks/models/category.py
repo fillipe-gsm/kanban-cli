@@ -15,3 +15,8 @@ class Category(BaseModel):
 
     def __str__(self) -> str:
         return self.name
+
+    @staticmethod
+    def category_names() -> list[str]:
+        """Convenience method to list all existing category names"""
+        return [cat.name for cat in Category.select(Category.name)]
