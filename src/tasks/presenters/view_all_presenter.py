@@ -29,21 +29,21 @@ class ViewAllPresenter:
         """
         layout = Layout(name="root")
 
-        tasks_list = [
+        tasks_presentation = [
             self._present_tasks_in_status(tasks_by_status[status_id])
             for status_id, _ in enumerate(settings.statuses)
         ]
         layout.split_row(
             *(
                 Layout(Panel(tasks, title=status))
-                for tasks, status in zip(tasks_list, settings.statuses)
+                for tasks, status in zip(tasks_presentation, settings.statuses)
             )
         )
 
         self._console.print("\n")
         self._console.print(layout)
 
-    def _present_tasks_in_status(self, tasks: list[Task]) -> str:
+    def _present_tasks_in_status(self, tasks: list[Task]) -> Group:
         """Writes a list of tasks in a status column
 
         The tasks should be presented like:
@@ -55,6 +55,9 @@ class ViewAllPresenter:
         <task3_display>
         ...
         """
+        if not tasks:
+            return Group("")
+
         group_content = [
             el for task in tasks for el in (self._present_task(task), Rule())
         ]

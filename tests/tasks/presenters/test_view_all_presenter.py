@@ -64,3 +64,23 @@ def test_present(tmp_db):
         assert str(task.id) in console_output
         assert ViewAllPresenter.NO_CATEGORY_STR in console_output
         assert task.title in console_output
+
+
+def test_present__empty_tasks_in_status(tmp_db):
+    """Fixes a bug where the code fails if some statues have no tasks"""
+    category = Category.create(name="cat1")
+    # Only one task in the status 0
+    task = Task.create(
+        title="Buy milk",
+        status=0,
+        category=category,
+    )
+    tasks_by_status = Task.group_by_status()
+
+    console = Console(file=StringIO(), width=200)
+    presenter = ViewAllPresenter(console=console)
+    presenter.present(tasks_by_status)
+
+    console_output = console.file.getvalue()
+
+    assert task.title in console_output, "Existing task is in output"
