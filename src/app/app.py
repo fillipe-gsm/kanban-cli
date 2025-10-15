@@ -4,6 +4,7 @@ from typer import Option, Typer
 
 from config import settings
 from src.app.models import db
+from src.tasks.controllers.add_controller import add_controller
 from src.tasks.controllers.promote_controller import promote_controller
 from src.tasks.controllers.view_all_controller import view_all_controller
 
@@ -28,7 +29,8 @@ def create_app() -> Typer:
 
     @app.command()
     def add() -> None:
-        """Add new task"""
+        """Add a new task"""
+        add_controller()
 
     @app.command()
     def promote(task_ids: list[int]) -> None:
