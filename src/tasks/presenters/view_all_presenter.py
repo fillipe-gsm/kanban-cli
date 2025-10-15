@@ -73,10 +73,6 @@ class ViewAllPresenter:
             #<task_id> [<task_category>]
             <task_title>
         """
-        category_str = (
-            f"[{task.category.name}]"
-            if task.category
-            else f"[{self.NO_CATEGORY_STR}]"
-        )
+        category_str = f"[{task.category_name}]"
 
         return f"#{task.id} [bold]{escape(category_str)}[/bold]\n{task.title}"
