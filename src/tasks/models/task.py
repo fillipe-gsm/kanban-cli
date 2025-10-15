@@ -10,6 +10,7 @@ from src.tasks.models.category import Category
 
 
 class Task(BaseModel):
+    NO_CATEGORY_STR = "<No category>"
     STATUS_CHOICES = [(i, val) for i, val in enumerate(settings.statuses)]
     _allowed_statuses = ", ".join(str(i) for i, _ in STATUS_CHOICES)
 
@@ -45,6 +46,14 @@ class Task(BaseModel):
     def created_at_str(self) -> str:
         """Human-readable visualization of creation date"""
         return self.created_at.strftime("%Y-%m-%d %H:%M")
+
+    @property
+    def category_name(self) -> str:
+        return (
+            f"{self.category.name}"
+            if self.category
+            else f"{self.NO_CATEGORY_STR}"
+        )
 
     @staticmethod
     def group_by_status() -> dict[str, list[Task]]:

@@ -71,6 +71,20 @@ def test_can_create_task_with_details(tmp_db):
     assert task.details == details
 
 
+def test_category_name__existing_category(tmp_db):
+    category_name = "cat"
+    category = Category.create(name=category_name)
+    task = Task.create(title="buy milk", category=category)
+
+    assert task.category_name == category_name
+
+
+def test_category_name__nonexisting_category(tmp_db):
+    task = Task.create(title="buy milk")
+
+    assert task.category_name == Task.NO_CATEGORY_STR
+
+
 def test_group_by_status(tmp_db):
     """Tasks must be grouped by status and sorted by creation date"""
     cat1 = Category.create(name="cat1")
