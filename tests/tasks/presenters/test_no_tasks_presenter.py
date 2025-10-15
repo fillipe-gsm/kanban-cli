@@ -5,7 +5,7 @@ from rich.console import Console
 from src.tasks.presenters.no_tasks_presenter import NoTasksPresenter
 
 
-def test_no_tasks_presenter(tmp_db):
+def test_no_tasks_presenter():
     console = Console(file=StringIO())
 
     presenter = NoTasksPresenter(console=console)
