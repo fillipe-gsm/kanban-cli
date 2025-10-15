@@ -66,6 +66,19 @@ class Task(BaseModel):
         return tasks_by_status
 
     @staticmethod
+    def add_from_prompt(
+        title: str, status: int, category_name: str, details: str
+    ) -> Task:
+        category, _ = (
+            Category.get_or_create(name=category_name)
+            if category_name
+            else (None, False)
+        )
+        return Task.create(
+            title=title, status=status, category=category, details=details
+        )
+
+    @staticmethod
     def promote(task_ids: list[int]) -> None:
         """Move up task status, truncating at the highest one"""
         max_status_level = len(Task.STATUS_CHOICES) - 1

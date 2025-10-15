@@ -106,3 +106,54 @@ def test_group_by_status__no_todos(tmp_db):
     expected_tasks_by_status = {0: [], 1: [], 2: [], 3: []}
 
     assert tasks_by_status == expected_tasks_by_status
+
+
+def test_add_from_prompt(tmp_db):
+    title = "buy milk"
+    status = 0
+    category_name = "category"
+    details = "Buy a lot of milk"
+
+    task = Task.add_from_prompt(title, status, category_name, details)
+
+    assert Task.select().count() == 1, "A task has been created"
+    assert Category.select().count() == 1, "A new category has been created"
+    assert task.title == title
+    assert task.status == status
+    assert task.category.name == category_name
+    assert task.details == details
+
+
+def test_add_from_prompt__empty_category(tmp_db):
+    title = "buy milk"
+    status = 0
+    category_name = ""
+    details = "Buy a lot of milk"
+
+    task = Task.add_from_prompt(title, status, category_name, details)
+
+    assert Task.select().count() == 1, "A task has been created"
+    assert Category.select().count() == 0, "No category has been created"
+    assert task.title == title
+    assert task.status == status
+    assert task.category is None
+    assert task.details == details
+
+
+def test_add_from_prompt__does_not_recreate_existing_categories(tmp_db):
+    Category.create(name="category")  # say a category already exists
+    assert Category.select().count() == 1, "Sanity check: one category exists"
+
+    title = "buy milk"
+    status = 0
+    category_name = "category"
+    details = "Buy a lot of milk"
+
+    task = Task.add_from_prompt(title, status, category_name, details)
+
+    assert Task.select().count() == 1, "A task has been created"
+    assert Category.select().count() == 1, "No new category is created"
+    assert task.title == title
+    assert task.status == status
+    assert task.category.name == category_name
+    assert task.details == details
