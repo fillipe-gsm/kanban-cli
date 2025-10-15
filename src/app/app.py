@@ -4,7 +4,8 @@ from typer import Option, Typer
 
 from config import settings
 from src.app.models import db
-from src.tasks.views.promote_view import promote_view
+from src.tasks.controllers.promote_controller import promote_controller
+from src.tasks.controllers.view_all_controller import view_all_controller
 
 
 def create_app() -> Typer:
@@ -26,6 +27,10 @@ def create_app() -> Typer:
         db.create_tables(MODELS)
 
     @app.command()
+    def add() -> None:
+        """Add new task"""
+
+    @app.command()
     def promote(task_ids: list[int]) -> None:
         """Move a list of tasks one status up
 
@@ -33,10 +38,11 @@ def create_app() -> Typer:
         Tasks at the highest status are kept at this level.
         Also, non-existing tasks are skipped.
         """
-        promote_view(task_ids)
+        promote_controller(task_ids)
 
     @app.command()
     def view_all() -> None:
-        """List all existing tasks"""
+        """List all existing tasks in a tabular format"""
+        view_all_controller()
 
     return app
