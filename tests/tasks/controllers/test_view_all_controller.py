@@ -38,6 +38,6 @@ def test_tasks_exist(
 
     view_all_controller()
 
-    # As there are no tasks, it calls the "view all tasks presenter"
+    # As there are tasks, it calls the "view all tasks presenter"
     mocked_no_tasks_presenter.assert_not_called()
     mocked_view_all_presenter.assert_called_once()
