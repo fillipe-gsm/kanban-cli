@@ -1,23 +1,18 @@
 from prompt_toolkit.lexers import PygmentsLexer
-from prompt_toolkit.shortcuts import choice
 from prompt_toolkit.shortcuts import prompt as prompt0
 from pygments.lexers.markup import MarkdownLexer
 
-YES_PROMPT = "y"
-NO_PROMPT = "n"
+from src.tasks.prompts.confirm_prompt import ConfirmPrompt
+
 DETAILS_PROMPT_CHAR = "> "
 
 
 class DetailsPrompt:
     def prompt(self) -> str:
-        yes_or_no = [(NO_PROMPT, "No"), (YES_PROMPT, "Yes")]
-        flag = choice(
-            message="Do you want to add details? ",
-            options=yes_or_no,
-            default=NO_PROMPT,
+        should_add_details_prompt = ConfirmPrompt(
+            message="Do you want to add details? "
         )
-
-        if flag == NO_PROMPT:
+        if not should_add_details_prompt.prompt():
             return ""
 
         return prompt0(
