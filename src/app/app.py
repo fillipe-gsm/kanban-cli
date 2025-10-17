@@ -7,6 +7,7 @@ from src.app.models import db
 from src.tasks.controllers.add_controller import add_controller
 from src.tasks.controllers.promote_controller import promote_controller
 from src.tasks.controllers.view_all_controller import view_all_controller
+from src.tasks.controllers.view_controller import view_controller
 
 
 def create_app() -> Typer:
@@ -28,6 +29,16 @@ def create_app() -> Typer:
         db.create_tables(MODELS)
 
     @app.command()
+    def view_all() -> None:
+        """List all existing tasks in a tabular format"""
+        view_all_controller()
+
+    @app.command()
+    def view(task_id: int) -> None:
+        """Shows a specific task with full details"""
+        view_controller(task_id)
+
+    @app.command()
     def add() -> None:
         """Add a new task"""
         add_controller()
@@ -41,10 +52,5 @@ def create_app() -> Typer:
         Also, non-existing tasks are skipped.
         """
         promote_controller(task_ids)
-
-    @app.command()
-    def view_all() -> None:
-        """List all existing tasks in a tabular format"""
-        view_all_controller()
 
     return app
