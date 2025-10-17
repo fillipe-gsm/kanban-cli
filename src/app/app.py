@@ -5,6 +5,7 @@ from typer import Option, Typer
 from config import settings
 from src.app.models import db
 from src.tasks.controllers.add_controller import add_controller
+from src.tasks.controllers.delete_controller import delete_controller
 from src.tasks.controllers.promote_controller import promote_controller
 from src.tasks.controllers.view_all_controller import view_all_controller
 from src.tasks.controllers.view_controller import view_controller
@@ -35,13 +36,18 @@ def create_app() -> Typer:
 
     @app.command()
     def view(task_id: int) -> None:
-        """Shows a specific task with full details"""
+        """Show a specific task with full details"""
         view_controller(task_id)
 
     @app.command()
     def add() -> None:
         """Add a new task"""
         add_controller()
+
+    @app.command()
+    def delete(task_id: int) -> None:
+        """Delete a task forever"""
+        delete_controller(task_id)
 
     @app.command()
     def promote(task_ids: list[int]) -> None:
