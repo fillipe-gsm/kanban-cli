@@ -87,6 +87,24 @@ class Task(BaseModel):
             title=title, status=status, category=category, details=details
         )
 
+    def edit_from_prompt(
+        self, title: str, status: int, category_name: str, details: str
+    ) -> None:
+        category, _ = (
+            Category.get_or_create(name=category_name)
+            if category_name
+            else (None, False)
+        )
+        query = Task.update(
+            {
+                Task.title: title,
+                Task.status: status,
+                Task.category: category,
+                Task.details: details,
+            }
+        ).where(Task.id == self.id)
+        query.execute()
+
     @staticmethod
     def promote(task_ids: list[int]) -> None:
         """Move up task status, truncating at the highest one"""

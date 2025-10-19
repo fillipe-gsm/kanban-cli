@@ -171,3 +171,78 @@ def test_add_from_prompt__does_not_recreate_existing_categories(tmp_db):
     assert task.status == status
     assert task.category.name == category_name
     assert task.details == details
+
+
+def test_edit_from_prompt__no_changes(tmp_db):
+    category = Category.create(name="category")
+    task = Task.create(
+        title="Buy milk", status=1, category=category, details="More stuff"
+    )
+    assert Category.select().count() == 1, "Sanity check: one category exists"
+
+    task.edit_from_prompt(
+        title=task.title,
+        status=task.status,
+        category_name=task.category_name,
+        details=task.details,
+    )
+
+    edited_task = Task.get_by_id(pk=task.id)
+
+    assert edited_task.title == task.title
+    assert edited_task.category == task.category
+    assert edited_task.status == task.status
+    assert edited_task.details == task.details
+    assert Category.select().count() == 1, "No new category was created"
+
+
+def test_edit_from_prompt__can_change_properties(tmp_db):
+    category = Category.create(name="category")
+    task = Task.create(
+        title="Buy milk", status=1, category=category, details="More stuff"
+    )
+    assert Category.select().count() == 1, "Sanity check: one category exists"
+
+    new_title = "Buy milk edited"
+    new_status = 2
+    new_details = "More stuff edited"
+    task.edit_from_prompt(
+        title=new_title,
+        status=new_status,
+        category_name=task.category_name,  # unchanged
+        details=new_details,
+    )
+
+    edited_task = Task.get_by_id(pk=task.id)
+
+    assert edited_task.title == new_title
+    assert edited_task.category == task.category, "Category was unchanged"
+    assert edited_task.status == new_status
+    assert edited_task.details == new_details
+    assert Category.select().count() == 1, "No new category was created"
+
+
+def test_edit_from_prompt__can_change_category(tmp_db):
+    category = Category.create(name="category")
+    task = Task.create(
+        title="Buy milk", status=1, category=category, details="More stuff"
+    )
+    assert Category.select().count() == 1, "Sanity check: one category exists"
+
+    new_category_name = "category 2"
+    task.edit_from_prompt(
+        title=task.title,
+        status=task.status,
+        category_name=new_category_name,
+        details=task.details,
+    )
+
+    edited_task = Task.get_by_id(pk=task.id)
+
+    assert edited_task.title == task.title, "title is unchaged"
+    assert edited_task.status == task.status, "status is unchanged"
+    assert edited_task.details == task.details, "details is unchanged"
+    assert edited_task.category_name == new_category_name, (
+        "category was changed"
+    )
+    assert Category.select().count() == 2, "one new category has been created"
