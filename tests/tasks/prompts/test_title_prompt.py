@@ -2,6 +2,7 @@ import pytest
 
 from config import settings
 from src.tasks.prompts.title_prompt import TitlePrompt
+from tests.tasks.prompts.key_mappings import KEY_MAPPINGS
 
 
 def test_prompt_title__valid(mocked_prompt_input, mock_app_session):
@@ -51,3 +52,33 @@ def test_prompt_title__too_large_prompt(mocked_prompt_input, mock_app_session):
 
     with mock_app_session, pytest.raises(EOFError):
         prompt.prompt()
+
+
+def test_prompt_title__default_value(mocked_prompt_input, mock_app_session):
+    current_title = "buy milk"
+    prompt = TitlePrompt(default_value=current_title)
+
+    # Just accept the default value
+    mocked_prompt_input.send_text(KEY_MAPPINGS["<Enter>"])
+
+    with mock_app_session:
+        title = prompt.prompt()
+
+    assert title == current_title, "Title remains unchanged"
+
+
+def test_prompt_title__can_update_default_value(
+    mocked_prompt_input, mock_app_session
+):
+    current_title = "buy milc"
+    prompt = TitlePrompt(default_value=current_title)
+
+    # Press backspace and fix last character with "k"
+    mocked_prompt_input.send_text(KEY_MAPPINGS["<Backspace>"])
+    mocked_prompt_input.send_text("k")
+    mocked_prompt_input.send_text(KEY_MAPPINGS["<Enter>"])
+
+    with mock_app_session:
+        title = prompt.prompt()
+
+    assert title == "buy milk", "Title has been fixed"

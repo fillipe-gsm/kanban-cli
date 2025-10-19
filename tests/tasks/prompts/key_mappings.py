@@ -4,4 +4,5 @@ KEY_MAPPINGS = {
     "<Up>": "\x1b[A",
     "<Esc>": "\x1b",
     "<Tab>": "\t",
+    "<Backspace>": "\b",
 }

@@ -12,12 +12,16 @@ if TYPE_CHECKING:
 
 
 class TitlePrompt:
+    def __init__(self, default_value: str = "") -> None:
+        self._default_value = default_value
+
     def prompt(self) -> str:
         """Pick task title from user"""
         return prompt(
             "Title: ",
             validator=TitleValidator(),
             validate_while_typing=False,
+            default=self._default_value,
         )
 
 
