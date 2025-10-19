@@ -30,3 +30,16 @@ def test_prompt_status__can_change_status(
         status = prompt.prompt()
 
     assert status == 2, "Picks third status option"
+
+
+def test_prompt_status__default_value(mocked_prompt_input, mock_app_session):
+    current_status = 2
+    prompt = StatusPrompt(default_value=current_status)
+
+    # Just press <Enter> without selecting anything
+    mocked_prompt_input.send_text(KEY_MAPPINGS["<Enter>"])
+
+    with mock_app_session:
+        status = prompt.prompt()
+
+    assert status == current_status, "Status has been unchanged"
