@@ -8,6 +8,7 @@ from src.tasks.controllers.add_controller import add_controller
 from src.tasks.controllers.delete_controller import delete_controller
 from src.tasks.controllers.edit_controller import edit_controller
 from src.tasks.controllers.promote_controller import promote_controller
+from src.tasks.controllers.regress_controller import regress_controller
 from src.tasks.controllers.view_all_controller import view_all_controller
 from src.tasks.controllers.view_controller import view_controller
 
@@ -64,5 +65,15 @@ def create_app() -> Typer:
         Also, non-existing tasks are skipped.
         """
         promote_controller(task_ids)
+
+    @app.command()
+    def regress(task_ids: list[int]) -> None:
+        """Move a list of tasks one status down
+
+        \b
+        Tasks at the lowest status are kept at this level.
+        Also, non-existing tasks are skipped.
+        """
+        regress_controller(task_ids)
 
     return app
