@@ -22,7 +22,7 @@ class ViewAllPresenter:
     def __init__(self, console: Console | None = None) -> None:
         self._console = console or Console()
 
-    def present(self, tasks_by_status: dict[str, Task]) -> None:
+    def present(self, tasks_by_status: dict[str, list[Task]]) -> None:
         """Display a table-like view with all existing tasks
 
         The tasks are grouped by status, each one in a column.

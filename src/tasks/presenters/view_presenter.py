@@ -19,7 +19,7 @@ class ViewPresenter:
     def __init__(self, console: Console | None = None) -> None:
         self._console = console or Console()
 
-    def present(self, task: Task) -> str:
+    def present(self, task: Task) -> None:
         table = Table(
             title=f"Task #{task.id}", show_header=False, show_lines=True
         )

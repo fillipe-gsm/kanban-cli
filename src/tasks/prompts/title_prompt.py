@@ -39,7 +39,7 @@ class TitleValidator(Validator):
             raise ValidationError(
                 message=(
                     "Title cannot be larger than "
-                    f"{settings.task__title_max_length} characters",
+                    f"{settings.task__title_max_length} characters"
                 ),
                 cursor_position=settings.task__title_max_length,
             )
