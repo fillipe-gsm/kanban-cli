@@ -115,3 +115,14 @@ class Task(BaseModel):
         ).where(Task.id.in_(task_ids))
 
         query.execute()
+
+    @staticmethod
+    def regress(task_ids: list[int]) -> None:
+        """Move down task status, truncating at the lowest one"""
+        min_status_level = 0
+
+        query = Task.update(
+            status=pw.fn.MAX(Task.status - 1, min_status_level)
+        ).where(Task.id.in_(task_ids))
+
+        query.execute()

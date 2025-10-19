@@ -296,3 +296,53 @@ def test_promote__non_existing_tasks_are_silently_ignored(tmp_db):
     assert Task.get_by_id(pk=task.id).status == 1, (
         f"Task {task.id} status moved up"
     )
+
+
+def test_regress__can_regress_a_task(tmp_db):
+    task = Task.create(title="buy milk", status=1)
+
+    Task.regress(task_ids=[task.id])
+    regressd_task = Task.get_by_id(pk=task.id)
+
+    assert regressd_task.status == 0, "status moved down"
+
+
+def test_regress__can_regress_multiple_tasks(tmp_db):
+    task1 = Task.create(title="task 1", status=1)
+    task2 = Task.create(title="task 2", status=2)
+    task3 = Task.create(title="task 3", status=3)
+
+    Task.regress(task_ids=[task1.id, task2.id])
+
+    assert Task.get_by_id(task1.id).status == 0, (
+        f"Task {task1.id} status moved down"
+    )
+    assert Task.get_by_id(task2.id).status == 1, (
+        f"Task {task2.id} status moved down"
+    )
+    assert Task.get_by_id(task3.id).status == 3, (
+        f"Task {task3.id} status was unchanged"
+    )
+
+
+def test_regress__cannot_regress_beyond_lowest_status(tmp_db):
+    first_status = 0
+    task = Task.create(title="task 1", status=first_status)
+
+    Task.regress(task_ids=[task.id])
+
+    assert Task.get_by_id(pk=task.id).status == first_status, (
+        "Cannot move beyond first status"
+    )
+
+
+def test_regress__non_existing_tasks_are_silently_ignored(tmp_db):
+    task = Task.create(title="task 1", status=1)
+
+    # 2 and 3 are ids of non-existing todos
+    Task.regress(task_ids=[task.id, 2, 3])
+
+    # It should succeed with no issues
+    assert Task.get_by_id(pk=task.id).status == 0, (
+        f"Task {task.id} status moved down"
+    )
