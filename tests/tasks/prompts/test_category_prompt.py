@@ -34,3 +34,39 @@ def test_category_prompt__can_write_empty_category(
         category_name = prompt.prompt()
 
     assert category_name == "", "Can input empty category"
+
+
+def test_selected_default_value(tmp_db, mocked_prompt_input, mock_app_session):
+    category1 = Category.create(name="category 1")
+    Category.create(name="category 2")
+    Category.create(name="category 3")
+
+    prompt = CategoryPrompt(
+        default_value=category1.name, category_names=Category.category_names()
+    )
+
+    mocked_prompt_input.send_text(KEY_MAPPINGS["<Enter>"])
+    with mock_app_session:
+        new_category_name = prompt.prompt()
+
+    assert new_category_name == category1.name, "Category remains unchanged"
+
+
+def test_can_change_default_value(
+    tmp_db, mocked_prompt_input, mock_app_session
+):
+    category1 = Category.create(name="category 1")
+    Category.create(name="category 2")
+    Category.create(name="category 3")
+
+    prompt = CategoryPrompt(
+        default_value=category1.name, category_names=Category.category_names()
+    )
+
+    mocked_prompt_input.send_text(KEY_MAPPINGS["<Backspace>"])
+    mocked_prompt_input.send_text("4")  # replace to `category 4`
+    mocked_prompt_input.send_text(KEY_MAPPINGS["<Enter>"])
+    with mock_app_session:
+        new_category_name = prompt.prompt()
+
+    assert new_category_name == "category 4", "Category got changed"
