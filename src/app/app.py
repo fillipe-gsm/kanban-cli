@@ -6,6 +6,7 @@ from config import settings
 from src.app.models import db
 from src.tasks.controllers.add_controller import add_controller
 from src.tasks.controllers.delete_controller import delete_controller
+from src.tasks.controllers.edit_controller import edit_controller
 from src.tasks.controllers.promote_controller import promote_controller
 from src.tasks.controllers.view_all_controller import view_all_controller
 from src.tasks.controllers.view_controller import view_controller
@@ -43,6 +44,11 @@ def create_app() -> Typer:
     def add() -> None:
         """Add a new task"""
         add_controller()
+
+    @app.command()
+    def edit(task_id: int) -> None:
+        """Edit an existing task"""
+        edit_controller(task_id)
 
     @app.command()
     def delete(task_id: int) -> None:
