@@ -1,3 +1,4 @@
+from src.tasks.controllers.view_all_controller import view_all_controller
 from src.tasks.models.task import Task
 
 
@@ -5,4 +6,5 @@ def promote_controller(task_ids: list[int]) -> None:
     """Move up the status of selected todos"""
     Task.promote(task_ids)
 
-    # TODO: call the `list_view` here at the end
+    # Print all tasks back
+    view_all_controller()

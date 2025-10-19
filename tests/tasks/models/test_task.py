@@ -246,3 +246,53 @@ def test_edit_from_prompt__can_change_category(tmp_db):
         "category was changed"
     )
     assert Category.select().count() == 2, "one new category has been created"
+
+
+def test_promote__can_promote_a_task(tmp_db):
+    task = Task.create(title="buy milk", status=0)
+
+    Task.promote(task_ids=[task.id])
+    promoted_task = Task.get_by_id(pk=task.id)
+
+    assert promoted_task.status == 1, "status moved up"
+
+
+def test_promote__can_promote_multiple_tasks(tmp_db):
+    task1 = Task.create(title="task 1", status=0)
+    task2 = Task.create(title="task 2", status=1)
+    task3 = Task.create(title="task 3", status=2)
+
+    Task.promote(task_ids=[task1.id, task2.id])
+
+    assert Task.get_by_id(task1.id).status == 1, (
+        f"Task {task1.id} status moved up"
+    )
+    assert Task.get_by_id(task2.id).status == 2, (
+        f"Task {task2.id} status moved up"
+    )
+    assert Task.get_by_id(task3.id).status == 2, (
+        f"Task {task3.id} status was unchanged"
+    )
+
+
+def test_promote__cannot_promote_beyond_highest_status(tmp_db):
+    last_status = len(settings.statuses) - 1
+    task = Task.create(title="task 1", status=last_status)
+
+    Task.promote(task_ids=[task.id])
+
+    assert Task.get_by_id(pk=task.id).status == last_status, (
+        "Cannot move beyond last status"
+    )
+
+
+def test_promote__non_existing_tasks_are_silently_ignored(tmp_db):
+    task = Task.create(title="task 1", status=0)
+
+    # 2 and 3 are ids of non-existing todos
+    Task.promote(task_ids=[task.id, 2, 3])
+
+    # It should succeed with no issues
+    assert Task.get_by_id(pk=task.id).status == 1, (
+        f"Task {task.id} status moved up"
+    )
