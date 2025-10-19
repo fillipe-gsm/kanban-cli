@@ -8,12 +8,20 @@ DETAILS_PROMPT_CHAR = "> "
 
 
 class DetailsPrompt:
+    def __init__(
+        self, default_value: str = "", is_editing: bool = False
+    ) -> None:
+        self._default_value = default_value
+        self._is_editing = is_editing
+
     def prompt(self) -> str:
-        should_add_details_prompt = ConfirmPrompt(
-            message="Do you want to add details? "
-        )
-        if not should_add_details_prompt.prompt():
-            return ""
+        command = "edit" if self._is_editing else "add"
+        should_add_or_edit_details = ConfirmPrompt(
+            message=f"Do you want to {command} details? "
+        ).prompt()
+
+        if not should_add_or_edit_details:
+            return self._default_value
 
         return prompt0(
             DETAILS_PROMPT_CHAR,
@@ -21,6 +29,7 @@ class DetailsPrompt:
             lexer=PygmentsLexer(MarkdownLexer),
             bottom_toolbar=self._bottom_toolbar,
             prompt_continuation=self._prompt_continuation,
+            default=self._default_value,
         )
 
     @staticmethod
