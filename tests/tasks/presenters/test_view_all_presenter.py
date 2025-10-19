@@ -50,7 +50,7 @@ def test_present(tmp_db):
     presenter = ViewAllPresenter(console=console)
     presenter.present(tasks_by_status)
 
-    console_output = console.file.getvalue()
+    console_output = console.file.getvalue()  # ty: ignore[unresolved-attribute]
 
     # For tasks with category, the id, category name and title are shown
     for task in (task1, task6):
@@ -81,6 +81,6 @@ def test_present__empty_tasks_in_status(tmp_db):
     presenter = ViewAllPresenter(console=console)
     presenter.present(tasks_by_status)
 
-    console_output = console.file.getvalue()
+    console_output = console.file.getvalue()  # ty: ignore[unresolved-attribute]
 
     assert task.title in console_output, "Existing task is in output"

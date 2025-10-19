@@ -16,7 +16,7 @@ def test_present(tmp_db):
     presenter = ViewPresenter(console=console)
     presenter.present(task)
 
-    console_output = console.file.getvalue()
+    console_output = console.file.getvalue()  # ty: ignore[unresolved-attribute]
 
     assert str(task.id) in console_output
     assert task.title in console_output
@@ -31,7 +31,7 @@ def test_present__no_category(tmp_db):
     presenter = ViewPresenter(console=console)
     presenter.present(task)
 
-    console_output = console.file.getvalue()
+    console_output = console.file.getvalue()  # ty: ignore[unresolved-attribute]
 
     assert str(task.id) in console_output
     assert task.title in console_output
@@ -47,7 +47,7 @@ def test_present__with_details(tmp_db):
     presenter = ViewPresenter(console=console)
     presenter.present(task)
 
-    console_output = console.file.getvalue()
+    console_output = console.file.getvalue()  # ty: ignore[unresolved-attribute]
 
     assert str(task.id) in console_output
     assert task.title in console_output

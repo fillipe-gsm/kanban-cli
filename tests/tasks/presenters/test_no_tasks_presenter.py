@@ -11,4 +11,5 @@ def test_no_tasks_presenter():
     presenter = NoTasksPresenter(console=console)
     presenter.present()
 
-    assert "No tasks available." in console.file.getvalue()
+    console_output = console.file.getvalue()  # ty: ignore[unresolved-attribute]
+    assert "No tasks available." in console_output
