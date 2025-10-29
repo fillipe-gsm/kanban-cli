@@ -64,7 +64,7 @@ class Task(BaseModel):
         )
 
     @staticmethod
-    def group_by_status() -> dict[str, list[Task]]:
+    def group_by_status() -> dict[int, list[Task]]:
         """List all existing tasks by status and sorted by creation date"""
         tasks = (
             Task.select()
