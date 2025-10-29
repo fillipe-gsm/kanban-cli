@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from datetime import datetime
+from typing import Iterator
 
 import peewee as pw
 
@@ -53,6 +54,13 @@ class Task(BaseModel):
             f"{self.category.name}"
             if self.category
             else f"{self.NO_CATEGORY_STR}"
+        )
+
+    @staticmethod
+    def iter_status_indices() -> Iterator[int]:
+        """Convenient method to iterate over the statuses indices"""
+        return (
+            status_index for status_index, _ in enumerate(settings.statuses)
         )
 
     @staticmethod

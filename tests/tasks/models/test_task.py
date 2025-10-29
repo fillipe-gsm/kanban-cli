@@ -85,6 +85,14 @@ def test_category_name__nonexisting_category(tmp_db):
     assert task.category_name == Task.NO_CATEGORY_STR
 
 
+def test_iter_status_indices(tmp_db):
+    expected_status_indices = [
+        status_index for status_index, _ in enumerate(settings.statuses)
+    ]
+
+    assert list(Task.iter_status_indices()) == expected_status_indices
+
+
 def test_group_by_status(tmp_db):
     """Tasks must be grouped by status and sorted by creation date"""
     cat1 = Category.create(name="cat1")
