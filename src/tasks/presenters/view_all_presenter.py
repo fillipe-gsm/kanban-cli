@@ -1,69 +1,119 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
-
-from rich.console import Console, Group
-from rich.layout import Layout
+from rich.console import Console
 from rich.markup import escape
-from rich.panel import Panel
 from rich.rule import Rule
+from rich.table import Table
 
 from config import settings
-
-if TYPE_CHECKING:
-    from src.tasks.models.task import Task
+from src.tasks.models.task import Task
 
 
 class ViewAllPresenter:
     """A class to display a summary list of tasks"""
 
     NO_CATEGORY_STR = "<No category>"
+    EMPTY_STR = ""
 
     def __init__(self, console: Console | None = None) -> None:
         self._console = console or Console()
 
-    def present(self, tasks_by_status: dict[str, list[Task]]) -> None:
-        """Display a table-like view with all existing tasks
+    def present(self, tasks_by_status: dict[int, list[Task]]) -> None:
+        """Display a table view with all existing tasks
 
         The tasks are grouped by status, each one in a column.
-        """
-        layout = Layout(name="root")
+        The rows should be viewed as follows:
 
-        tasks_presentation = [
-            self._present_tasks_in_status(tasks_by_status[status_id])
-            for status_id, _ in enumerate(settings.statuses)
-        ]
-        layout.split_row(
-            *(
-                Layout(Panel(tasks, title=status))
-                for tasks, status in zip(tasks_presentation, settings.statuses)
-            )
-        )
+        Status 1 | Status 2 | Status 3
+        ==============================
+        task 11  | task 12  | task 13
+        -------  |          | -------
+        task 21  |          | task 23
+        -------  |          |
+        task 31  |          |
+
+        Notice, for each status column, if a given task has an upcoming task,
+        they are separated by rules, otherwise we get an empty string.
+        """
+
+        table = Table(expand=True, title="Tasks")
+        for status in settings.statuses:
+            table.add_column(status, justify="left")
+
+        tasks_rows = self._build_tasks_rows(tasks_by_status)
+        rules_rows = self._build_rules_rows(tasks_rows)
+        rows = self._build_all_rows(tasks_rows, rules_rows)
+        for row in rows:
+            table.add_row(*row)
 
         self._console.print("\n")
-        self._console.print(layout)
+        self._console.print(table)
 
-    def _present_tasks_in_status(self, tasks: list[Task]) -> Group:
-        """Writes a list of tasks in a status column
+    def _build_tasks_rows(
+        self, tasks_by_status: dict[int, list[Task]]
+    ) -> list[list[str]]:
+        """Build a table with the tasks in a presentation-like view
 
-        The tasks should be presented like:
-
-        <task1_display>
-        ---
-        <task2_display>
-        ---
-        <task3_display>
-        ...
+        This method groups only the rows with tasks.
+        If, for the i-th status, the j-th row has no task, the EMPTY_STR is
+        used instead.
         """
-        if not tasks:
-            return Group("")
+        max_num_tasks_in_status = max(
+            len(tasks) for tasks in tasks_by_status.values()
+        )
 
-        group_content = [
-            el for task in tasks for el in (self._present_task(task), Rule())
+        def get_ith_task_or_empty(status_index: int, i: int) -> str:
+            tasks = tasks_by_status[status_index]
+            if i >= len(tasks):
+                return self.EMPTY_STR
+
+            task = tasks[i]
+            return self._present_task(task)
+
+        return [
+            [
+                get_ith_task_or_empty(status_index, i)
+                for status_index in Task.iter_status_indices()
+            ]  # build each column of a row
+            for i in range(max_num_tasks_in_status)
         ]
-        group_content.pop()  # remove last `Rule`
 
-        return Group(*group_content)
+    def _build_rules_rows(
+        self, task_rows: list[list[str]]
+    ) -> list[list[str | Rule]]:
+        """Build rules rows
+
+        The rules separate one task from its subsequent one. In case a given
+        task has no next one, the EMPTY_STR is used instead.
+        """
+
+        def get_ith_rule_or_empty(
+            task_row: list[str], status_index: int
+        ) -> Rule | str:
+            if task_row[status_index] == self.EMPTY_STR:
+                return self.EMPTY_STR
+
+            return Rule()
+
+        return [
+            [
+                get_ith_rule_or_empty(next_task_row, status_index)
+                for status_index in Task.iter_status_indices()
+            ]
+            for next_task_row in task_rows[1:]
+        ]
+
+    def _build_all_rows(
+        self, tasks_rows: list[list[str]], rules_rows: list[list[str | Rule]]
+    ) -> list[list[str | Rule]]:
+        """Combine the tasks and rules rows into a full table"""
+        rows = []
+        for task_row, rule_row in zip(tasks_rows, rules_rows):
+            rows.append(task_row)
+            rows.append(rule_row)
+
+        rows.append(tasks_rows[-1])
+        return rows
 
     def _present_task(self, task: Task) -> str:
         """Display a single task
