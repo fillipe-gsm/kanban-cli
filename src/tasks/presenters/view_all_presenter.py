@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from rich.align import Align
 from rich.console import Console
 from rich.markup import escape
 from rich.rule import Rule
@@ -38,7 +39,9 @@ class ViewAllPresenter:
 
         table = Table(expand=True, title="Tasks")
         for status in settings.statuses:
-            table.add_column(status, justify="left")
+            table.add_column(
+                Align(status, align="center"), justify="left", ratio=1
+            )
 
         tasks_rows = self._build_tasks_rows(tasks_by_status)
         rules_rows = self._build_rules_rows(tasks_rows)
@@ -46,7 +49,6 @@ class ViewAllPresenter:
         for row in rows:
             table.add_row(*row)
 
-        self._console.print("\n")
         self._console.print(table)
 
     def _build_tasks_rows(
