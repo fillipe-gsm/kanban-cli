@@ -5,7 +5,6 @@ import pytest
 from prompt_toolkit.application import create_app_session
 from prompt_toolkit.input import create_pipe_input
 from prompt_toolkit.output import DummyOutput
-from prompt_toolkit.shortcuts.prompt import PromptSession
 
 from src.tasks.models.category import Category
 from src.tasks.models.task import Task

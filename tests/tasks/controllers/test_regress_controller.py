@@ -2,7 +2,6 @@ from unittest.mock import patch
 
 import pytest
 
-from config import settings
 from src.tasks.controllers.regress_controller import regress_controller
 from src.tasks.models.task import Task
 
