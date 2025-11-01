@@ -46,3 +46,10 @@ target-version = "py39"
 quote-style = "double"
 indent-style = "space"
 docstring-code-format = true
+
+[tool.coverage.report]
+omit = ["main.py"]
+exclude_also = [
+    # Don't need to test this everytime
+    "def __str__",
+]
