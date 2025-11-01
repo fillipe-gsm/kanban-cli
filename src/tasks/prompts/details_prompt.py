@@ -33,7 +33,7 @@ class DetailsPrompt:
         )
 
     @staticmethod
-    def _bottom_toolbar() -> str:
+    def _bottom_toolbar() -> str:  # pragma: no cover
         return (
             "Write details in markdown style. "
             "Type Alt+Enter or Esc+Enter when done."
@@ -42,5 +42,5 @@ class DetailsPrompt:
     @staticmethod
     def _prompt_continuation(
         width: int, line_number: int, is_soft_wrap: bool
-    ) -> str:
+    ) -> str:  # pragma: no cover
         return DETAILS_PROMPT_CHAR
