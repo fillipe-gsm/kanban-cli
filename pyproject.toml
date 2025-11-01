@@ -17,6 +17,7 @@ dev = [
     "ipdb>=0.13.13",
     "ipython>=8.18.1",
     "pytest>=8.4.2",
+    "pytest-cov>=7.0.0",
     "ruff>=0.14.3",
     "ty>=0.0.1a21",
 ]
@@ -45,3 +46,10 @@ target-version = "py39"
 quote-style = "double"
 indent-style = "space"
 docstring-code-format = true
+
+[tool.coverage.report]
+omit = ["main.py"]
+exclude_also = [
+    # Don't need to test this everytime
+    "def __str__",
+]
