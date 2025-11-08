@@ -29,6 +29,11 @@ def test_add_controller(
     mocked_prompt_input.send_text(KEY_MAPPINGS["<Down>"])
     mocked_prompt_input.send_text(KEY_MAPPINGS["<Enter>"])
 
+    # Fill priority by pressing up once
+    priority = 1
+    mocked_prompt_input.send_text(KEY_MAPPINGS["<Up>"])
+    mocked_prompt_input.send_text(KEY_MAPPINGS["<Enter>"])
+
     # Fill category name
     category_name = "personal"
     mocked_prompt_input.send_text(category_name)
@@ -53,6 +58,7 @@ def test_add_controller(
 
     assert task.title == title
     assert task.status == status
+    assert task.priority == priority
     assert task.category.name == category_name
     assert task.details == details
 
@@ -71,6 +77,11 @@ def test_add_controller__no_category(
     # Fill status by pressing down once
     status = 1
     mocked_prompt_input.send_text(KEY_MAPPINGS["<Down>"])
+    mocked_prompt_input.send_text(KEY_MAPPINGS["<Enter>"])
+
+    # Fill priority by pressing up once
+    priority = 1
+    mocked_prompt_input.send_text(KEY_MAPPINGS["<Up>"])
     mocked_prompt_input.send_text(KEY_MAPPINGS["<Enter>"])
 
     # Fill no category name by just pressing ENTER
@@ -95,6 +106,7 @@ def test_add_controller__no_category(
 
     assert task.title == title
     assert task.status == status
+    assert task.priority == priority
     assert task.category is None
     assert task.details == details
 
