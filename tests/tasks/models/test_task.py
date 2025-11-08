@@ -150,6 +150,29 @@ def test_group_by_status__no_todos(tmp_db):
     assert tasks_by_status == expected_tasks_by_status
 
 
+def test_group_by_status__sort_by_priority(tmp_db):
+    """
+    Tasks are also sorted by priority first, with the highest coming before
+    """
+    task1 = Task.create(title="t1", status=0, priority=0)
+    task2 = Task.create(title="t2", status=0, priority=1)
+    task3 = Task.create(title="t3", status=2, priority=0)
+    task4 = Task.create(title="t4", status=3, priority=3)
+    task5 = Task.create(title="t5", status=3, priority=0)
+    task6 = Task.create(title="t6", status=1, priority=0)
+
+    expected_tasks_by_status = {
+        0: [task2, task1],  # task2 has higher priority (1) than task1 (0)
+        1: [task6],
+        2: [task3],
+        3: [task4, task5],  # task4 has higher priority (3) than task5 (0)
+    }
+
+    tasks_by_status = Task.group_by_status()
+
+    assert tasks_by_status == expected_tasks_by_status
+
+
 def test_add_from_prompt(tmp_db):
     title = "buy milk"
     status = 0

@@ -78,7 +78,10 @@ class Task(BaseModel):
 
     @staticmethod
     def group_by_status() -> dict[int, list[Task]]:
-        """List all existing tasks by status and sorted by creation date"""
+        """
+        List all existing tasks by status and sorted by priority (descending)
+        and creation date (ascending)
+        """
         tasks = (
             Task.select()
             .join(
@@ -86,7 +89,7 @@ class Task(BaseModel):
                 on=(Task.category == Category.id),
                 join_type=pw.JOIN.LEFT_OUTER,
             )
-            .order_by(Task.created_at)
+            .order_by(Task.priority.desc(), Task.created_at)
         )
 
         tasks_by_status = {i: [] for i, _ in enumerate(settings.statuses)}
