@@ -22,7 +22,7 @@ def create_app() -> Typer:
     def main(
         filename: Annotated[
             str, Option("-f", "--filename", help="File name")
-        ] = settings.default_db_name,
+        ] = settings.db_name,
     ) -> None:
         """Simple Kanban management in the command line"""
         # Local import to prevent circular imports
