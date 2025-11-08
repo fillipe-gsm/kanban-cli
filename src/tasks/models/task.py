@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from collections.abc import Iterator
 from datetime import datetime
 
 import peewee as pw
@@ -56,7 +57,14 @@ class Task(BaseModel):
         )
 
     @staticmethod
-    def group_by_status() -> dict[str, list[Task]]:
+    def iter_status_indices() -> Iterator[int]:
+        """Convenient method to iterate over the statuses indices"""
+        return (
+            status_index for status_index, _ in enumerate(settings.statuses)
+        )
+
+    @staticmethod
+    def group_by_status() -> dict[int, list[Task]]:
         """List all existing tasks by status and sorted by creation date"""
         tasks = (
             Task.select()
