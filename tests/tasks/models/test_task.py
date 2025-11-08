@@ -49,6 +49,26 @@ def test_can_create_task_with_status(tmp_db):
     assert task2.status_str == settings.statuses[2], "Status is the third"
 
 
+def test_can_create_task_with_priority(tmp_db):
+    task1 = Task.create(title="buy milk", priority=0)
+    assert task1.priority_str == settings.priorities[0], (
+        "Priority is the first"
+    )
+
+    task2 = Task.create(title="buy milk", priority=2)
+    assert task2.priority_str == settings.priorities[2], (
+        "Priority is the third"
+    )
+
+
+def test_can_create_task_with_priority__default(tmp_db):
+    task = Task.create(title="buy milk")
+
+    assert task.priority_str == settings.priorities[2], (
+        "normal priority by default"
+    )
+
+
 def test_cannot_create_task_with_invalid_status(tmp_db):
     """Status must be a number within the possible statuses"""
     invalid_status = len(settings.statuses) + 1
@@ -130,18 +150,45 @@ def test_group_by_status__no_todos(tmp_db):
     assert tasks_by_status == expected_tasks_by_status
 
 
+def test_group_by_status__sort_by_priority(tmp_db):
+    """
+    Tasks are also sorted by priority first, with the highest coming before
+    """
+    task1 = Task.create(title="t1", status=0, priority=0)
+    task2 = Task.create(title="t2", status=0, priority=1)
+    task3 = Task.create(title="t3", status=2, priority=0)
+    task4 = Task.create(title="t4", status=3, priority=3)
+    task5 = Task.create(title="t5", status=3, priority=0)
+    task6 = Task.create(title="t6", status=1, priority=0)
+
+    expected_tasks_by_status = {
+        0: [task2, task1],  # task2 has higher priority (1) than task1 (0)
+        1: [task6],
+        2: [task3],
+        3: [task4, task5],  # task4 has higher priority (3) than task5 (0)
+    }
+
+    tasks_by_status = Task.group_by_status()
+
+    assert tasks_by_status == expected_tasks_by_status
+
+
 def test_add_from_prompt(tmp_db):
     title = "buy milk"
     status = 0
+    priority = 2
     category_name = "category"
     details = "Buy a lot of milk"
 
-    task = Task.add_from_prompt(title, status, category_name, details)
+    task = Task.add_from_prompt(
+        title, status, priority, category_name, details
+    )
 
     assert Task.select().count() == 1, "A task has been created"
     assert Category.select().count() == 1, "A new category has been created"
     assert task.title == title
     assert task.status == status
+    assert task.priority == priority
     assert task.category.name == category_name
     assert task.details == details
 
@@ -149,15 +196,19 @@ def test_add_from_prompt(tmp_db):
 def test_add_from_prompt__empty_category(tmp_db):
     title = "buy milk"
     status = 0
+    priority = 2
     category_name = ""
     details = "Buy a lot of milk"
 
-    task = Task.add_from_prompt(title, status, category_name, details)
+    task = Task.add_from_prompt(
+        title, status, priority, category_name, details
+    )
 
     assert Task.select().count() == 1, "A task has been created"
     assert Category.select().count() == 0, "No category has been created"
     assert task.title == title
     assert task.status == status
+    assert task.priority == priority
     assert task.category is None
     assert task.details == details
 
@@ -168,15 +219,19 @@ def test_add_from_prompt__does_not_recreate_existing_categories(tmp_db):
 
     title = "buy milk"
     status = 0
+    priority = 2
     category_name = "category"
     details = "Buy a lot of milk"
 
-    task = Task.add_from_prompt(title, status, category_name, details)
+    task = Task.add_from_prompt(
+        title, status, priority, category_name, details
+    )
 
     assert Task.select().count() == 1, "A task has been created"
     assert Category.select().count() == 1, "No new category is created"
     assert task.title == title
     assert task.status == status
+    assert task.priority == priority
     assert task.category.name == category_name
     assert task.details == details
 
@@ -184,13 +239,18 @@ def test_add_from_prompt__does_not_recreate_existing_categories(tmp_db):
 def test_edit_from_prompt__no_changes(tmp_db):
     category = Category.create(name="category")
     task = Task.create(
-        title="Buy milk", status=1, category=category, details="More stuff"
+        title="Buy milk",
+        status=1,
+        priority=1,
+        category=category,
+        details="More stuff",
     )
     assert Category.select().count() == 1, "Sanity check: one category exists"
 
     task.edit_from_prompt(
         title=task.title,
         status=task.status,
+        priority=task.priority,
         category_name=task.category_name,
         details=task.details,
     )
@@ -200,6 +260,7 @@ def test_edit_from_prompt__no_changes(tmp_db):
     assert edited_task.title == task.title
     assert edited_task.category == task.category
     assert edited_task.status == task.status
+    assert edited_task.priority == task.priority
     assert edited_task.details == task.details
     assert Category.select().count() == 1, "No new category was created"
 
@@ -207,16 +268,22 @@ def test_edit_from_prompt__no_changes(tmp_db):
 def test_edit_from_prompt__can_change_properties(tmp_db):
     category = Category.create(name="category")
     task = Task.create(
-        title="Buy milk", status=1, category=category, details="More stuff"
+        title="Buy milk",
+        status=1,
+        priority=1,
+        category=category,
+        details="More stuff",
     )
     assert Category.select().count() == 1, "Sanity check: one category exists"
 
     new_title = "Buy milk edited"
     new_status = 2
+    new_priority = 2
     new_details = "More stuff edited"
     task.edit_from_prompt(
         title=new_title,
         status=new_status,
+        priority=new_priority,
         category_name=task.category_name,  # unchanged
         details=new_details,
     )
@@ -226,6 +293,7 @@ def test_edit_from_prompt__can_change_properties(tmp_db):
     assert edited_task.title == new_title
     assert edited_task.category == task.category, "Category was unchanged"
     assert edited_task.status == new_status
+    assert edited_task.priority == new_priority
     assert edited_task.details == new_details
     assert Category.select().count() == 1, "No new category was created"
 
@@ -233,7 +301,11 @@ def test_edit_from_prompt__can_change_properties(tmp_db):
 def test_edit_from_prompt__can_change_category(tmp_db):
     category = Category.create(name="category")
     task = Task.create(
-        title="Buy milk", status=1, category=category, details="More stuff"
+        title="Buy milk",
+        status=1,
+        priority=1,
+        category=category,
+        details="More stuff",
     )
     assert Category.select().count() == 1, "Sanity check: one category exists"
 
@@ -241,6 +313,7 @@ def test_edit_from_prompt__can_change_category(tmp_db):
     task.edit_from_prompt(
         title=task.title,
         status=task.status,
+        priority=task.priority,
         category_name=new_category_name,
         details=task.details,
     )
@@ -249,6 +322,7 @@ def test_edit_from_prompt__can_change_category(tmp_db):
 
     assert edited_task.title == task.title, "title is unchaged"
     assert edited_task.status == task.status, "status is unchanged"
+    assert edited_task.priority == task.priority, "priority is unchanged"
     assert edited_task.details == task.details, "details is unchanged"
     assert edited_task.category_name == new_category_name, (
         "category was changed"

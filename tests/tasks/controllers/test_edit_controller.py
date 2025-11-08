@@ -43,6 +43,7 @@ def test_edit_defaults(
     task = Task.create(
         title="Buy milk",
         status=1,
+        priority=1,
         category=category,
         details="Buy milk because...",
     )
@@ -50,6 +51,7 @@ def test_edit_defaults(
 
     mocked_prompt_input.send_text(KEY_MAPPINGS["<Enter>"])  # accept title
     mocked_prompt_input.send_text(KEY_MAPPINGS["<Enter>"])  # accept status
+    mocked_prompt_input.send_text(KEY_MAPPINGS["<Enter>"])  # accept priority
     mocked_prompt_input.send_text(KEY_MAPPINGS["<Enter>"])  # accept category
     mocked_prompt_input.send_text(
         KEY_MAPPINGS["<Enter>"]
@@ -63,6 +65,7 @@ def test_edit_defaults(
     # Sanity check: no property got changed
     assert edited_task.title == task.title
     assert edited_task.status == task.status
+    assert edited_task.priority == task.priority
     assert edited_task.category == task.category
     assert edited_task.details == task.details
     assert Category.select().count() == 1, (
@@ -81,6 +84,7 @@ def test_edit_defaults__can_update_attribute(
     task = Task.create(
         title="Buy milk",
         status=1,
+        priority=1,
         category=category,
         details="Buy milk becausi",  # with a typo at the last character
     )
@@ -88,10 +92,11 @@ def test_edit_defaults__can_update_attribute(
 
     mocked_prompt_input.send_text(KEY_MAPPINGS["<Enter>"])  # accept title
     mocked_prompt_input.send_text(KEY_MAPPINGS["<Enter>"])  # accept status
+    mocked_prompt_input.send_text(KEY_MAPPINGS["<Enter>"])  # accept priority
     mocked_prompt_input.send_text(KEY_MAPPINGS["<Enter>"])  # accept category
 
     # For details: press "Down" to select "yes"
-    mocked_prompt_input.send_text(KEY_MAPPINGS["<Down>"])  # accept category
+    mocked_prompt_input.send_text(KEY_MAPPINGS["<Down>"])
     mocked_prompt_input.send_text(KEY_MAPPINGS["<Enter>"])
 
     # Press backspace to fix the typo and add a couple more characters
@@ -109,6 +114,7 @@ def test_edit_defaults__can_update_attribute(
     # Sanity check: no property but the details got changed
     assert edited_task.title == task.title
     assert edited_task.status == task.status
+    assert edited_task.priority == task.priority
     assert edited_task.category == task.category
     assert edited_task.details == "Buy milk because...", "details got updated"
     assert Category.select().count() == 1, (
@@ -127,12 +133,14 @@ def test_edit_defaults__can_update_category(
     task = Task.create(
         title="Buy milk",
         status=1,
+        priority=1,
         category=category,
     )
     assert Category.select().count() == 1, "sanity check: one category exists"
 
     mocked_prompt_input.send_text(KEY_MAPPINGS["<Enter>"])  # accept title
     mocked_prompt_input.send_text(KEY_MAPPINGS["<Enter>"])  # accept status
+    mocked_prompt_input.send_text(KEY_MAPPINGS["<Enter>"])  # accept priority
 
     # Edit category name
     mocked_prompt_input.send_text(KEY_MAPPINGS["<Backspace>"])
@@ -154,4 +162,5 @@ def test_edit_defaults__can_update_category(
     # Sanity check: no property but the category got changed
     assert edited_task.title == task.title
     assert edited_task.status == task.status
+    assert edited_task.priority == task.priority
     assert edited_task.details == task.details
