@@ -120,7 +120,12 @@ class Task(BaseModel):
         )
 
     def edit_from_prompt(
-        self, title: str, status: int, category_name: str, details: str
+        self,
+        title: str,
+        status: int,
+        priority: int,
+        category_name: str,
+        details: str,
     ) -> None:
         category, _ = (
             Category.get_or_create(name=category_name)
@@ -131,6 +136,7 @@ class Task(BaseModel):
             {
                 Task.title: title,
                 Task.status: status,
+                Task.priority: priority,
                 Task.category: category,
                 Task.details: details,
             }
