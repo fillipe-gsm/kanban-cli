@@ -1,0 +1,52 @@
+= Kanban cli management
+
+:author: Fillipe Goulart
+:email: fillipe.gsm@tutanota.com
+:toc-title: Kanban cli management
+:toc:
+
+
+Status: alpha
+
+This is a command-line tool to manage simple kanban boards.
+
+TODO: add a gif with the feature working.
+
+== Installation
+
+TODO: still not uploaded to pypi as it is in alpha version.
+
+The recommended way is to use https://pypi.org/project/pipx/[`pipx`], which installs the software in a separate Python environment automatically without you needing to worry about Python at all:
+
+[,sh]
+----
+pipx install kanban-cli
+----
+
+You also don't need sudo privileges here.
+
+Alternatively, if you have a specific Python environment that is active, a simple `pip install` should work as well:
+
+[,sh]
+----
+pip install kanban-cli
+----
+
+== Commands
+
+TODO
+
+
+== For developers
+
+Before creating a pull request, make sure the following conditions are satisfied:
+
+[,sh]
+----
+# All code has been formatted according to `ruff`'s rules
+uv run ruff check
+# Type hints are correctly written
+uv run ty check
+# All tests pass with at least 95% coverage
+uv run pytest --cov=. --cov-fail-under=95 tests/
+----
