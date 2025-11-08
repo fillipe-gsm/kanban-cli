@@ -49,6 +49,26 @@ def test_can_create_task_with_status(tmp_db):
     assert task2.status_str == settings.statuses[2], "Status is the third"
 
 
+def test_can_create_task_with_priority(tmp_db):
+    task1 = Task.create(title="buy milk", priority=0)
+    assert task1.priority_str == settings.priorities[0], (
+        "Priority is the first"
+    )
+
+    task2 = Task.create(title="buy milk", priority=2)
+    assert task2.priority_str == settings.priorities[2], (
+        "Priority is the third"
+    )
+
+
+def test_can_create_task_with_priority__default(tmp_db):
+    task = Task.create(title="buy milk")
+
+    assert task.priority_str == settings.priorities[2], (
+        "normal priority by default"
+    )
+
+
 def test_cannot_create_task_with_invalid_status(tmp_db):
     """Status must be a number within the possible statuses"""
     invalid_status = len(settings.statuses) + 1

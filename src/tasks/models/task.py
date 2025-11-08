@@ -14,6 +14,8 @@ class Task(BaseModel):
     NO_CATEGORY_STR = "<No category>"
     STATUS_CHOICES = [(i, val) for i, val in enumerate(settings.statuses)]
     _allowed_statuses = ", ".join(str(i) for i, _ in STATUS_CHOICES)
+    PRIORITY_CHOICES = [(i, val) for i, val in enumerate(settings.priorities)]
+    _allowed_priorities = ", ".join(str(i) for i, _ in PRIORITY_CHOICES)
 
     title = pw.CharField(
         max_length=settings.task__title_max_length,
@@ -26,6 +28,11 @@ class Task(BaseModel):
         default=0,  # first status by default
         constraints=[pw.Check(f"status IN ({_allowed_statuses})")],
     )
+    priority = pw.IntegerField(
+        choices=PRIORITY_CHOICES,
+        default=len(PRIORITY_CHOICES) // 2,  # average priority by default
+        constraints=[pw.Check(f"priority IN ({_allowed_priorities})")],
+    )
     category = pw.ForeignKeyField(Category, backref="tasks", null=True)
     created_at = pw.DateTimeField(default=datetime.now())
     details = pw.TextField(null=True)
@@ -34,6 +41,7 @@ class Task(BaseModel):
         return (
             f"Title: {self.title}; "
             f"Status: {self.status_str}; "
+            f"Priority: {self.priority_str}; "
             f"Category: {self.category}; "
             f"Created at: {self.created_at_str}"
         )
@@ -42,6 +50,11 @@ class Task(BaseModel):
     def status_str(self) -> str:
         """Human-readable visualization of status"""
         return settings.statuses[self.status]
+
+    @property
+    def priority_str(self) -> str:
+        """Human-readable visualization of priority"""
+        return settings.priorities[self.priority]
 
     @property
     def created_at_str(self) -> str:
