@@ -91,7 +91,7 @@ def test_edit_defaults__can_update_attribute(
     mocked_prompt_input.send_text(KEY_MAPPINGS["<Enter>"])  # accept category
 
     # For details: press "Down" to select "yes"
-    mocked_prompt_input.send_text(KEY_MAPPINGS["<Down>"])  # accept category
+    mocked_prompt_input.send_text(KEY_MAPPINGS["<Down>"])
     mocked_prompt_input.send_text(KEY_MAPPINGS["<Enter>"])
 
     # Press backspace to fix the typo and add a couple more characters
