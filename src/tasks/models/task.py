@@ -100,7 +100,11 @@ class Task(BaseModel):
 
     @staticmethod
     def add_from_prompt(
-        title: str, status: int, category_name: str, details: str
+        title: str,
+        status: int,
+        priority: int,
+        category_name: str,
+        details: str,
     ) -> Task:
         category, _ = (
             Category.get_or_create(name=category_name)
@@ -108,7 +112,11 @@ class Task(BaseModel):
             else (None, False)
         )
         return Task.create(
-            title=title, status=status, category=category, details=details
+            title=title,
+            status=status,
+            priority=priority,
+            category=category,
+            details=details,
         )
 
     def edit_from_prompt(
