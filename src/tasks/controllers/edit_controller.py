@@ -4,6 +4,7 @@ from src.tasks.models.task import Task
 from src.tasks.presenters.no_task_presenter import NoTaskPresenter
 from src.tasks.prompts.category_prompt import CategoryPrompt
 from src.tasks.prompts.details_prompt import DetailsPrompt
+from src.tasks.prompts.priority_prompt import PriorityPrompt
 from src.tasks.prompts.status_prompt import StatusPrompt
 from src.tasks.prompts.title_prompt import TitlePrompt
 
@@ -17,6 +18,7 @@ def edit_controller(task_id: int) -> None:
 
     title = TitlePrompt(default_value=task.title).prompt()
     status = StatusPrompt(default_value=task.status).prompt()
+    priority = PriorityPrompt(default_value=task.priority).prompt()
     category_names = Category.category_names()
     category_name = CategoryPrompt(
         default_value=task.category_name, category_names=category_names
@@ -28,6 +30,7 @@ def edit_controller(task_id: int) -> None:
     task.edit_from_prompt(
         title=title,
         status=status,
+        priority=priority,
         category_name=category_name,
         details=details,
     )
