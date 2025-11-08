@@ -21,6 +21,7 @@ def test_present(tmp_db):
     assert str(task.id) in console_output
     assert task.title in console_output
     assert settings.statuses[task.status] in console_output
+    assert settings.priorities[task.priority] in console_output
     assert task.category.name in console_output
 
 
@@ -36,6 +37,7 @@ def test_present__no_category(tmp_db):
     assert str(task.id) in console_output
     assert task.title in console_output
     assert settings.statuses[task.status] in console_output
+    assert settings.priorities[task.priority] in console_output
     assert task.NO_CATEGORY_STR in console_output
 
 
@@ -52,5 +54,6 @@ def test_present__with_details(tmp_db):
     assert str(task.id) in console_output
     assert task.title in console_output
     assert settings.statuses[task.status] in console_output
+    assert settings.priorities[task.priority] in console_output
     assert task.NO_CATEGORY_STR in console_output
     assert task.details in console_output

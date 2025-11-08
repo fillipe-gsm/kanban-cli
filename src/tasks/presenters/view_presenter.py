@@ -29,6 +29,7 @@ class ViewPresenter:
         table.add_row("Id", str(task.id))
         table.add_row("Title", task.title)
         table.add_row("Status", task.status_str)
+        table.add_row("Priority", task.priority_str)
         table.add_row("Category", task.category_name)
         table.add_row("Created at", str(task.created_at_str))
         table.add_row(
