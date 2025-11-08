@@ -52,17 +52,20 @@ def test_present(tmp_db):
 
     console_output = console.file.getvalue()  # ty: ignore[unresolved-attribute]
 
-    # For tasks with category, the id, category name and title are shown
+    # For tasks with category, the id, category name, priority and title are
+    # shown
     for task in (task1, task6):
         assert str(task.id) in console_output
         assert task.category.name in console_output
+        assert task.priority_str in console_output
         assert task.title in console_output
 
-    # For tasks without category, the id and title are shown, plus a generic
-    # "No category" message
+    # For tasks without category, the id, priority and title are shown, plus a
+    # generic "No category" message
     for task in (task2, task3, task4, task5):
         assert str(task.id) in console_output
         assert ViewAllPresenter.NO_CATEGORY_STR in console_output
+        assert task.priority_str in console_output
         assert task.title in console_output
 
 

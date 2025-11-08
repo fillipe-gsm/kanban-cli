@@ -122,9 +122,15 @@ class ViewAllPresenter:
 
         Writes a task in the format:
 
-            #<task_id> [<task_category>]
+            #<task_id> [<task_priority>] [<task_category>]
             <task_title>
         """
         category_str = f"[{task.category_name}]"
+        priority_str = f"[{task.priority_str}]"
 
-        return f"#{task.id} [bold]{escape(category_str)}[/bold]\n{task.title}"
+        return (
+            f"#{task.id} "
+            f"[underline]{escape(priority_str)}[/underline] "
+            f"[bold]{escape(category_str)}[/bold]\n"
+            f"{task.title}"
+        )
