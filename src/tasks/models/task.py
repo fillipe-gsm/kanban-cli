@@ -7,7 +7,7 @@ import peewee as pw
 
 from config import settings
 from src.app.models import BaseModel
-from src.tasks.models.category import Category
+from src.categories.models.category import Category
 
 
 class Task(BaseModel):

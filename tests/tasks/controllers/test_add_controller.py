@@ -2,8 +2,8 @@ from unittest.mock import patch
 
 import pytest
 
+from src.categories.models.category import Category
 from src.tasks.controllers.add_controller import add_controller
-from src.tasks.models.category import Category
 from src.tasks.models.task import Task
 from tests.tasks.prompts.key_mappings import KEY_MAPPINGS
 

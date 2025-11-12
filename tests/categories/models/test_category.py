@@ -2,7 +2,7 @@ import peewee as pw
 import pytest
 
 from config import settings
-from src.tasks.models.category import Category
+from src.categories.models.category import Category
 
 
 def test_can_create_valid_category(tmp_db):

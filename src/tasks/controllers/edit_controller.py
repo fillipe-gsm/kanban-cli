@@ -1,5 +1,5 @@
+from src.categories.models.category import Category
 from src.tasks.controllers.view_controller import view_controller
-from src.tasks.models.category import Category
 from src.tasks.models.task import Task
 from src.tasks.presenters.no_task_presenter import NoTaskPresenter
 from src.tasks.prompts.category_prompt import CategoryPrompt

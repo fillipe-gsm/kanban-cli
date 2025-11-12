@@ -6,7 +6,7 @@ from prompt_toolkit.application import create_app_session
 from prompt_toolkit.input import create_pipe_input
 from prompt_toolkit.output import DummyOutput
 
-from src.tasks.models.category import Category
+from src.categories.models.category import Category
 from src.tasks.models.task import Task
 
 TEST_DB = pw.SqliteDatabase(":memory:")
