@@ -27,3 +27,10 @@ class Category(BaseModel):
     def list_categories() -> list[Category]:
         """Convenience method to return a list of all categories"""
         return list(Category.select())
+
+    def edit_from_prompt(self, category_name: str) -> None:
+        """Update current's category name"""
+        query = Category.update({Category.name: category_name}).where(
+            Category.id == self.id
+        )
+        query.execute()

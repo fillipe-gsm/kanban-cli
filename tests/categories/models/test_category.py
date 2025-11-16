@@ -42,3 +42,16 @@ def test_category_names(tmp_db):
     expected_category_names = ["category 1", "category 2", "category 3"]
 
     assert Category.category_names() == expected_category_names
+
+
+def test_edit_from_prompt(tmp_db):
+    category = Category.create(name="perssonal")
+    assert Category.select().count() == 1, "sanity check: one category exists"
+
+    new_category_name = "personal"
+    category.edit_from_prompt(category_name=new_category_name)
+
+    assert Category.select().count() == 1, "no new category got created"
+    assert Category.get_by_id(pk=category.id).name == new_category_name, (
+        "category name got updated"
+    )
