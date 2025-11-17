@@ -4,7 +4,7 @@ from src.tasks.prompts.category_prompt import CategoryPrompt
 
 
 def add_controller() -> None:
-    """Run a sequence of prompts to add a new controller"""
+    """Run a sequence of prompts to add a new category"""
     category_names = Category.category_names()
     category_name = CategoryPrompt(category_names=category_names).prompt()
 
