@@ -8,7 +8,7 @@ from src.categories.presenters.view_all_presenter import ViewAllPresenter
 def view_all_controller() -> None:
     """Query and list all existing categories, if any"""
     # Efficient test if any category exists
-    if Category.select().limit(1).exists() == 0:
+    if not Category.select().limit(1).exists():
         NoCategoriesPresenter().present()
         return
 
