@@ -15,7 +15,7 @@ def mocked_view_all_controller():
         yield m
 
 
-def test_add_controller__nonemtpy_category(
+def test_add_controller__nonempty_category(
     tmp_db, mock_app_session, mocked_prompt_input, mocked_view_all_controller
 ):
     # Fill category name
