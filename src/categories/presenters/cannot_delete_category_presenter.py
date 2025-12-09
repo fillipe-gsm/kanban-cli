@@ -1,4 +1,5 @@
 from rich.console import Console
+from rich.markup import escape
 
 
 class CannotDeleteCategoryPresenter:
@@ -14,8 +15,9 @@ class CannotDeleteCategoryPresenter:
         linked_task_ids_str = ", ".join(
             f"#{task_id}" for task_id in linked_task_ids
         )
+        category_str = f"[{category_name}]"
         msg = (
-            f"Cannot delete category \[{category_name}]. "
+            f"Cannot delete category {escape(category_str)}. "
             f"The following task ids depend on it: {linked_task_ids_str}"
         )
         self._console.print(msg)
