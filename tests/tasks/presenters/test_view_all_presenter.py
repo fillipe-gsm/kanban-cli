@@ -3,7 +3,7 @@ from io import StringIO
 
 from rich.console import Console
 
-from src.tasks.models.category import Category
+from src.categories.models.category import Category
 from src.tasks.models.task import Task
 from src.tasks.presenters.view_all_presenter import ViewAllPresenter
 

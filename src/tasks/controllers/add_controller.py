@@ -1,5 +1,5 @@
+from src.categories.models.category import Category
 from src.tasks.controllers.view_all_controller import view_all_controller
-from src.tasks.models.category import Category
 from src.tasks.models.task import Task
 from src.tasks.prompts.category_prompt import CategoryPrompt
 from src.tasks.prompts.details_prompt import DetailsPrompt

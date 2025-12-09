@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import peewee as pw
 
 from config import settings
@@ -20,3 +22,15 @@ class Category(BaseModel):
     def category_names() -> list[str]:
         """Convenience method to list all existing category names"""
         return [cat.name for cat in Category.select(Category.name)]
+
+    @staticmethod
+    def list_categories() -> list[Category]:
+        """Convenience method to return a list of all categories"""
+        return list(Category.select())
+
+    def edit_from_prompt(self, category_name: str) -> None:
+        """Update current's category name"""
+        query = Category.update({Category.name: category_name}).where(
+            Category.id == self.id
+        )
+        query.execute()

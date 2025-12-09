@@ -20,7 +20,7 @@ def test_view_all(tst_app, tmp_db):
     task1 = Task.create(title="buy milk")
     task2 = Task.create(title="buy bread")
 
-    result = runner.invoke(tst_app, ["view-all"])
+    result = runner.invoke(tst_app, ["tasks", "view-all"])
 
     assert result.exit_code == 0, "sanity check: no errors"
     # Existing tasks are in displayed output
@@ -30,7 +30,7 @@ def test_view_all(tst_app, tmp_db):
 
 
 def test_view_all__no_tasks(tst_app, tmp_db):
-    result = runner.invoke(tst_app, ["view-all"])
+    result = runner.invoke(tst_app, ["tasks", "view-all"])
 
     assert result.exit_code == 0, "sanity check: no errors"
     assert NoTasksPresenter.MSG in result.output, "shows no tasks presenter"
@@ -39,7 +39,7 @@ def test_view_all__no_tasks(tst_app, tmp_db):
 def test_view_task(tst_app, tmp_db):
     task = Task.create(title="buy milk", details="why buy milk")
 
-    result = runner.invoke(tst_app, ["view", f"{task.id}"])
+    result = runner.invoke(tst_app, ["tasks", "view", f"{task.id}"])
 
     assert result.exit_code == 0, "sanity check: no errors"
     # Existing task is in displayed output
@@ -49,7 +49,7 @@ def test_view_task(tst_app, tmp_db):
 
 
 def test_view_task__non_existing_task(tst_app, tmp_db):
-    result = runner.invoke(tst_app, ["view", "1"])
+    result = runner.invoke(tst_app, ["tasks", "view", "1"])
 
     assert result.exit_code == 0, "sanity check: no errors"
     expected_msg = NoTaskPresenter.MSG.format(1)
@@ -57,8 +57,8 @@ def test_view_task__non_existing_task(tst_app, tmp_db):
 
 
 def test_add(tst_app, tmp_db):
-    with patch("src.app.app.add_controller") as m:
-        runner.invoke(tst_app, ["add"])
+    with patch("src.tasks.tasks_app.add_controller") as m:
+        runner.invoke(tst_app, ["tasks", "add"])
 
     # Add controller was called
     m.assert_called_once()
@@ -66,8 +66,8 @@ def test_add(tst_app, tmp_db):
 
 def test_edit(tst_app, tmp_db):
     task_id = 1
-    with patch("src.app.app.edit_controller") as m:
-        runner.invoke(tst_app, ["edit", f"{task_id}"])
+    with patch("src.tasks.tasks_app.edit_controller") as m:
+        runner.invoke(tst_app, ["tasks", "edit", f"{task_id}"])
 
     # Add controller was called
     m.assert_called_once_with(task_id)
@@ -75,8 +75,8 @@ def test_edit(tst_app, tmp_db):
 
 def test_delete(tst_app, tmp_db):
     task_id = 1
-    with patch("src.app.app.delete_controller") as m:
-        runner.invoke(tst_app, ["delete", f"{task_id}"])
+    with patch("src.tasks.tasks_app.delete_controller") as m:
+        runner.invoke(tst_app, ["tasks", "delete", f"{task_id}"])
 
     # Add controller was called with task_id
     m.assert_called_once_with(task_id)
@@ -84,8 +84,10 @@ def test_delete(tst_app, tmp_db):
 
 def test_promote(tst_app, tmp_db):
     task_ids = [1, 2]
-    with patch("src.app.app.promote_controller") as m:
-        runner.invoke(tst_app, ["promote", str(task_ids[0]), str(task_ids[1])])
+    with patch("src.tasks.tasks_app.promote_controller") as m:
+        runner.invoke(
+            tst_app, ["tasks", "promote", str(task_ids[0]), str(task_ids[1])]
+        )
 
     # Add controller was called
     m.assert_called_once_with(task_ids)
@@ -93,8 +95,10 @@ def test_promote(tst_app, tmp_db):
 
 def test_regress(tst_app, tmp_db):
     task_ids = [1, 2]
-    with patch("src.app.app.regress_controller") as m:
-        runner.invoke(tst_app, ["regress", str(task_ids[0]), str(task_ids[1])])
+    with patch("src.tasks.tasks_app.regress_controller") as m:
+        runner.invoke(
+            tst_app, ["tasks", "regress", str(task_ids[0]), str(task_ids[1])]
+        )
 
     # Add controller was called
     m.assert_called_once_with(task_ids)
