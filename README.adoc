@@ -5,9 +5,6 @@
 :toc-title: Kanban cli management
 :toc:
 
-
-Status: alpha
-
 This is a command-line tool to manage simple kanban boards.
 
 TODO: add a gif with the feature working.
@@ -32,12 +29,222 @@ Alternatively, if you have a specific Python environment that is active, a simpl
 pip install kanban-cli
 ----
 
-== Commands
+== Quickstart
 
-TODO
+Start typing:
+
+[,sh]
+----
+kanban-cli tasks view-all
+----
+
+This will do two things: (i) create a `kanban.db` file to store your tasks (which can be changed as shown later), and (ii) query and print all existing tasks. If you started this in an empty file, you should see a message with no tasks available.
+
+Then, add a new task with
+
+[,sh]
+----
+kanban-cli tasks add
+----
+
+You should see a number of prompts to detail the task you want:
+
+* Title, which defaults to at most 50 characters;
+* Status, which defaults to one of "To-do", "In progress", "Review", "Done";
+* Priority, which defaults to "Lowest", "Low", "Normal", "High", "Highest";
+* Category, which defaults to at most 50 characters. Notice it autocompletes existing categories, if any;
+* Optional details, which are basically a free text with multiple lines, allowing text in the markdown style.
+
+After you fill these, you should see a tabular view of the task as exemplified below. Try adding more tasks.
+
+[,sh]
+----
+                                                                 Tasks
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃              To-do              ┃           In progress           ┃             Review             ┃              Done              ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ #1 [Normal] [personal]          │                                 │                                │                                │
+│ buy milk                        │                                 │                                │                                │
+└─────────────────────────────────┴─────────────────────────────────┴────────────────────────────────┴────────────────────────────────┘
+----
+
+The most common movements of a task is to change its status, which we refer to `promote` when moved up and `regress` when moved down. To promote the previous task, use its identification (`#1` shown in the example above) and type the following command:
+
+
+[,sh]
+----
+kanban-cli promote 1
+----
+
+which should change the column it currently belongs to. Try promoting it further or regressing it later.
+
+[,sh]
+----
+                                                                 Tasks
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃              To-do              ┃           In progress           ┃             Review             ┃              Done              ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│                                 │ #1 [Normal] [personal]          │                                │                                │
+│                                 │ buy milk                        │                                │                                │
+└─────────────────────────────────┴─────────────────────────────────┴────────────────────────────────┴────────────────────────────────┘
+----
+
+You can also get a more detailed view of a task with
+
+[,sh]
+----
+kanban-cli view 1
+----
+
+which displays all information about a task, including its details (if any).
+
+
+[,sh]
+----
+                                             Task #1
+┌────────────┬──────────────────────────────────────────────────────────────────────────────────┐
+│         Id │ 1                                                                                │
+├────────────┼──────────────────────────────────────────────────────────────────────────────────┤
+│      Title │ buy milk                                                                         │
+├────────────┼──────────────────────────────────────────────────────────────────────────────────┤
+│     Status │ In progress                                                                      │
+├────────────┼──────────────────────────────────────────────────────────────────────────────────┤
+│   Priority │ Normal                                                                           │
+├────────────┼──────────────────────────────────────────────────────────────────────────────────┤
+│   Category │ personal                                                                         │
+├────────────┼──────────────────────────────────────────────────────────────────────────────────┤
+│ Created at │ 2025-12-09 13:36                                                                 │
+├────────────┼──────────────────────────────────────────────────────────────────────────────────┤
+│    Details │ I want to buy milk because my wife is the boss of me and she told be to buy milk │
+└────────────┴──────────────────────────────────────────────────────────────────────────────────┘
+----
+
+
+If you made a mistake, you can edit a task with
+
+[,sh]
+----
+kanban-cli edit 1
+----
+
+which should show the same sequence of prompts when adding it, except the fields come pre-filled. You can simply press the return key for the ones you don't want to change.
+
+Finally, you can delete a task with
+
+[,sh]
+----
+kanban-cli delete 1
+----
+
+which removes it *forever* from the data.
+
+You can manipulate the categories with similar commands by replacing `tasks` with `categories`.
+
+== Getting help
+
+For general help on the full commands, type
+
+[,sh]
+----
+kanban-cli --help
+----
+
+and it will show all available options and commands, like as follows:
+
+[,sh]
+----
+ Simple Kanban management in the command line
+
+╭─ Options ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ --filename            -f      TEXT  File name [default: kanban.db]                                                                  │
+│ --install-completion                Install completion for the current shell.                                                       │
+│ --show-completion                   Show completion for the current shell, to copy it or customize the installation.                │
+│ --help                              Show this message and exit.                                                                     │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─ Commands ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ tasks                                                                                                                               │
+│ categories                                                                                                                          │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+----
+
+Also, for a given command, you can get further help, for instance,
+
+[,sh]
+----
+kanban-cli tasks --help
+----
+
+== Customizing the settings
+
+The library has the following config variables with their default values:
+
+[,toml]
+----
+db_name = "kanban.db"
+task__title_max_length = 50
+category__name_max_length = 50
+statuses = ["To-do", "In progress", "Review", "Done"]
+priorities = ["Lowest", "Low", "Normal", "High", "Highest"]
+----
+
+You can change some or all of them in two different ways.
+
+=== Using environment variables
+
+You can create an environment variable in your shell with any of the previous config by (i) putting it in all caps and (ii) preceding it with a `KB_`.
+
+Examples considering a `bash` compatible shell:
+
+* `export KB_TASK__TITLE_MAX_LENGTH=100` will raise the limit on the task title to 100 characters;
+* `export KB_STATUSES=["Backlog", "Doing", "Done"]` will change the possible statuses to these three instead.
+
+[NOTE]
+--
+Of course, different shells may have different ways of assigning these variables (e.g., `fish` shell requires us to write `set -x KB_TASK__TITLE_MAX_LENGTH 100`). Check your shell for that option.
+--
+
+If you change only some variables, the others will retain their default values.
+
+
+=== Using a configuration file
+
+Alternatively, you can create a `kb_settings.toml` file in you current directory and update only the variables you want. In this case, you don't need to use capitalized letters neither append `KB_` to them.
+
+For example, you can get the previous configuration variables by creating a `kb_settings.toml` file with:
+
+[,toml]
+----
+task__title_max_length = 100
+statuses = ["Backlog", "Doing", "Done"]
+----
+
+and, as before, unset variables retain their default values.
+
+Keep in mind that, if you use both approaches at the same time, the environment variables take precedence.
+
+[TIP]
+--
+The `db_name` is the only one that has a corresponding command line option with `--filename` or just `-f` in case you want to handle multiple files without having to deal with env variables or settings files.
+--
+
+[NOTE]
+--
+Keep in mind that you should avoid changing the config files to existing files, as the tasks may have been created with the old configuration.
+
+Hence, always start a new tasks file if changing the configuration.
+--
 
 
 == For developers
+
+The library uses https://github.com/astral-sh/uv[`uv`] as project manager. Make sure it is installed in your system.
+
+Then, install all dependencies with:
+
+[,sh]
+----
+uv sync
+----
 
 Before creating a pull request, make sure the following conditions are satisfied:
 
