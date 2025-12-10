@@ -62,3 +62,7 @@ exclude_also = [
     # Don't need to test this everytime
     "def __str__",
 ]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
