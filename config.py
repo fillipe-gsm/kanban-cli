@@ -1,11 +1,19 @@
+from pathlib import Path
+
 from dynaconf import Dynaconf
+
+current_folder = Path(__file__).parent
 
 # The user can overwrite existing variables with either:
 # - creating environment variables starting with `KB_` such as `KB_DB_NAME`; or
 # - create a `kb_settings.toml` and add the variables they want
 settings = Dynaconf(
     envvar_prefix="KB",
-    settings_files=["settings.toml", ".secrets.toml", "kb_settings.toml"],
+    settings_files=[
+        current_folder / "settings.toml",
+        current_folder / ".secrets.toml",
+        "kb_settings.toml",
+    ],
 )
 
 # `envvar_prefix` = export envvars with `export DYNACONF_FOO=bar`.
