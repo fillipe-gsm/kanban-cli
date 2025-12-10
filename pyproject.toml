@@ -1,6 +1,6 @@
 [project]
-name = "kanban-cli"
-version = "0.1.0"
+name = "py-kanban-cli"
+version = "0.1.1"
 description = "Personal kanban management in command line"
 authors = [{name = "Fillipe Goulart", email="fillipe.gsm@tutanota.com"}]
 readme = "README_PYPI.md"
@@ -19,7 +19,7 @@ Repository = "https://github.com/fillipe-gsm/kanban-cli"
 Issues = "https://github.com/fillipe-gsm/kanban-cli/issues"
 
 [project.scripts]
-kanban-cli = "src:app:run_app"
+kanban-cli = "src.app.app:run_app"
 
 [dependency-groups]
 dev = [
@@ -62,6 +62,12 @@ exclude_also = [
     # Don't need to test this everytime
     "def __str__",
 ]
+
+[tool.hatch.build.targets.wheel]
+# “src” is the package directory relative to the project root
+packages = ["src"]
+# Optional: if you have data files you want bundled, list them here
+include = ["README.adoc", "settings.toml", "config.py", "LICENSE"]
 
 [build-system]
 requires = ["hatchling"]
