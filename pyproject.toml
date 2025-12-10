@@ -2,6 +2,7 @@
 name = "kanban-cli"
 version = "0.1.0"
 description = "Personal kanban management in command line"
+authors = [{name = "Fillipe Goulart", email="fillipe.gsm@tutanota.com"}]
 readme = "README_PYPI.md"
 requires-python = ">=3.9"
 dependencies = [
@@ -11,6 +12,14 @@ dependencies = [
     "rich>=14.1.0",
     "typer>=0.19.2",
 ]
+
+[project.urls]
+Homepage = "https://github.com/fillipe-gsm/kanban-cli"
+Repository = "https://github.com/fillipe-gsm/kanban-cli"
+Issues = "https://github.com/fillipe-gsm/kanban-cli/issues"
+
+[project.scripts]
+kanban-cli = "src:app:run_app"
 
 [dependency-groups]
 dev = [
