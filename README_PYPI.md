@@ -4,7 +4,7 @@ This is a command-line tool to manage simple kanban boards.
 
 ## Installation
 
-The recommended way is to use [https://pypi.org/project/pipx](`pipx`), which installs the software in a separate Python environment automatically without you needing to worry about Python at all:
+The recommended way is to use [`pipx`](https://pypi.org/project/pipx), which installs the software in a separate Python environment automatically without you needing to worry about Python at all:
 
 ```sh
 pipx install py-kanban-cli
@@ -37,4 +37,4 @@ kanban-cli tasks --help
 kanban-cli categories --help
 ```
 
-See the [https://github.com/fillipe-gsm/kanban-cli](repository page) for more complete examples and configuration.
+See the [repository page](https://github.com/fillipe-gsm/kanban-cli) for more complete examples and configuration.
