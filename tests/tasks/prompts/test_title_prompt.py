@@ -1,6 +1,6 @@
 import pytest
 
-from src.config import settings
+from config import settings
 from src.tasks.prompts.title_prompt import TitlePrompt
 from tests.tasks.prompts.key_mappings import KEY_MAPPINGS
 

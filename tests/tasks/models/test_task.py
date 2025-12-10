@@ -3,8 +3,8 @@ from datetime import datetime
 import peewee as pw
 import pytest
 
+from config import settings
 from src.categories.models.category import Category
-from src.config import settings
 from src.tasks.models.task import Task
 
 

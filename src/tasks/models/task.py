@@ -5,9 +5,9 @@ from datetime import datetime
 
 import peewee as pw
 
+from config import settings
 from src.app.models import BaseModel
 from src.categories.models.category import Category
-from src.config import settings
 
 
 class Task(BaseModel):

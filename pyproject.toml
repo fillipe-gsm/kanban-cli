@@ -67,7 +67,7 @@ exclude_also = [
 # “src” is the package directory relative to the project root
 packages = ["src"]
 # Optional: if you have data files you want bundled, list them here
-include = ["README.adoc", "settings.toml", "LICENSE"]
+include = ["README.adoc", "settings.toml", "config.py", "LICENSE"]
 
 [build-system]
 requires = ["hatchling"]

@@ -1,6 +1,6 @@
 from prompt_toolkit.shortcuts import choice
 
-from src.config import settings
+from config import settings
 
 
 class StatusPrompt:

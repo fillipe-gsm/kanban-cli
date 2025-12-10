@@ -2,9 +2,9 @@ from typing import Annotated
 
 from typer import Option, Typer
 
+from config import settings
 from src.app.models import db
 from src.categories.categories_app import create_app as create_categories_app
-from src.config import settings
 from src.tasks.tasks_app import create_app as create_tasks_app
 
 

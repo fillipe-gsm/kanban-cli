@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 from prompt_toolkit.shortcuts import prompt
 from prompt_toolkit.validation import ValidationError, Validator
 
-from src.config import settings
+from config import settings
 
 if TYPE_CHECKING:
     from prompt_toolkit.document import Document
