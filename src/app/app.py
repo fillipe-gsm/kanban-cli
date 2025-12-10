@@ -30,3 +30,8 @@ def create_app() -> Typer:
     app.add_typer(create_categories_app(), name="categories")
 
     return app
+
+
+def run_app() -> None:
+    app = create_app()
+    app()
