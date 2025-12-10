@@ -1,6 +1,6 @@
 from prompt_toolkit.shortcuts import choice
 
-from config import settings
+from src.config import settings
 
 
 class PriorityPrompt:

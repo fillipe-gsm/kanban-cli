@@ -2,8 +2,8 @@ from __future__ import annotations
 
 import peewee as pw
 
-from config import settings
 from src.app.models import BaseModel
+from src.config import settings
 
 
 class Category(BaseModel):

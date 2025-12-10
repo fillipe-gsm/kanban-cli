@@ -6,7 +6,7 @@ from rich.markup import escape
 from rich.rule import Rule
 from rich.table import Table
 
-from config import settings
+from src.config import settings
 from src.tasks.models.task import Task
 
 

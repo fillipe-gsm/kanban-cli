@@ -2,7 +2,7 @@ from unittest.mock import patch
 
 import pytest
 
-from config import settings
+from src.config import settings
 from src.tasks.controllers.promote_controller import promote_controller
 from src.tasks.models.task import Task
 

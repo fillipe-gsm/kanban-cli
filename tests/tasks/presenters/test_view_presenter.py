@@ -2,8 +2,8 @@ from io import StringIO
 
 from rich.console import Console
 
-from config import settings
 from src.categories.models.category import Category
+from src.config import settings
 from src.tasks.models.task import Task
 from src.tasks.presenters.view_presenter import ViewPresenter
 
