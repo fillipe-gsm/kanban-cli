@@ -2,8 +2,8 @@ from __future__ import annotations
 
 import peewee as pw
 
-from kanban_cli.config import settings
 from kanban_cli.app.models import BaseModel
+from kanban_cli.config import settings
 
 
 class Category(BaseModel):

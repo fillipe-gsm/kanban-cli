@@ -5,9 +5,9 @@ from datetime import datetime
 
 import peewee as pw
 
-from kanban_cli.config import settings
 from kanban_cli.app.models import BaseModel
 from kanban_cli.categories.models.category import Category
+from kanban_cli.config import settings
 
 
 class Task(BaseModel):

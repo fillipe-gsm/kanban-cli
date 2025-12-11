@@ -3,8 +3,8 @@ from datetime import datetime
 import peewee as pw
 import pytest
 
-from kanban_cli.config import settings
 from kanban_cli.categories.models.category import Category
+from kanban_cli.config import settings
 from kanban_cli.tasks.models.task import Task
 
 
