@@ -10,7 +10,7 @@ from kanban_cli.tasks.models.task import Task
 @pytest.fixture
 def mocked_view_all_controller():
     with patch(
-        "src.tasks.controllers.promote_controller.view_all_controller"
+        "kanban_cli.tasks.controllers.promote_controller.view_all_controller"
     ) as m:
         yield m
 

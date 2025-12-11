@@ -57,7 +57,7 @@ def test_view_task__non_existing_task(tst_app, tmp_db):
 
 
 def test_add(tst_app, tmp_db):
-    with patch("src.tasks.tasks_app.add_controller") as m:
+    with patch("kanban_cli.tasks.tasks_app.add_controller") as m:
         runner.invoke(tst_app, ["tasks", "add"])
 
     # Add controller was called
@@ -66,7 +66,7 @@ def test_add(tst_app, tmp_db):
 
 def test_edit(tst_app, tmp_db):
     task_id = 1
-    with patch("src.tasks.tasks_app.edit_controller") as m:
+    with patch("kanban_cli.tasks.tasks_app.edit_controller") as m:
         runner.invoke(tst_app, ["tasks", "edit", f"{task_id}"])
 
     # Add controller was called
@@ -75,7 +75,7 @@ def test_edit(tst_app, tmp_db):
 
 def test_delete(tst_app, tmp_db):
     task_id = 1
-    with patch("src.tasks.tasks_app.delete_controller") as m:
+    with patch("kanban_cli.tasks.tasks_app.delete_controller") as m:
         runner.invoke(tst_app, ["tasks", "delete", f"{task_id}"])
 
     # Add controller was called with task_id
@@ -84,7 +84,7 @@ def test_delete(tst_app, tmp_db):
 
 def test_promote(tst_app, tmp_db):
     task_ids = [1, 2]
-    with patch("src.tasks.tasks_app.promote_controller") as m:
+    with patch("kanban_cli.tasks.tasks_app.promote_controller") as m:
         runner.invoke(
             tst_app, ["tasks", "promote", str(task_ids[0]), str(task_ids[1])]
         )
@@ -95,7 +95,7 @@ def test_promote(tst_app, tmp_db):
 
 def test_regress(tst_app, tmp_db):
     task_ids = [1, 2]
-    with patch("src.tasks.tasks_app.regress_controller") as m:
+    with patch("kanban_cli.tasks.tasks_app.regress_controller") as m:
         runner.invoke(
             tst_app, ["tasks", "regress", str(task_ids[0]), str(task_ids[1])]
         )

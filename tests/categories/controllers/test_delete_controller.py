@@ -27,7 +27,7 @@ def mocked_cannot_delete_category_presenter():
 @pytest.fixture
 def mocked_view_all_controller():
     with patch(
-        "src.categories.controllers.delete_controller.view_all_controller"
+        "kanban_cli.categories.controllers.delete_controller.view_all_controller"
     ) as m:
         yield m
 

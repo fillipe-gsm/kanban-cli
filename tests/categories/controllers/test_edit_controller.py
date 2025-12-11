@@ -11,7 +11,7 @@ from tests.tasks.prompts.key_mappings import KEY_MAPPINGS
 @pytest.fixture
 def mocked_view_all_controller():
     with patch(
-        "src.categories.controllers.edit_controller.view_all_controller"
+        "kanban_cli.categories.controllers.edit_controller.view_all_controller"
     ) as m:
         yield m
 
