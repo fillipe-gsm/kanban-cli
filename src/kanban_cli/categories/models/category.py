@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import peewee as pw
 
-from config import settings
+from kanban_cli.config import settings
 from kanban_cli.app.models import BaseModel
 
 

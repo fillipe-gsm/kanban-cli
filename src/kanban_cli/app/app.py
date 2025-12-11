@@ -2,7 +2,7 @@ from typing import Annotated
 
 from typer import Option, Typer
 
-from config import settings
+from kanban_cli.config import settings
 from kanban_cli.app.models import db
 from kanban_cli.categories.categories_app import (
     create_app as create_categories_app,

@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 from prompt_toolkit.shortcuts import prompt
 from prompt_toolkit.validation import ValidationError, Validator
 
-from config import settings
+from kanban_cli.config import settings
 
 if TYPE_CHECKING:
     from prompt_toolkit.document import Document

@@ -2,7 +2,7 @@ from unittest.mock import patch
 
 import pytest
 
-from config import settings
+from kanban_cli.config import settings
 from kanban_cli.tasks.controllers.promote_controller import promote_controller
 from kanban_cli.tasks.models.task import Task
 

@@ -6,7 +6,7 @@ from rich.markup import escape
 from rich.rule import Rule
 from rich.table import Table
 
-from config import settings
+from kanban_cli.config import settings
 from kanban_cli.tasks.models.task import Task
 
 

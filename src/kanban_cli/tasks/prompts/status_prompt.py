@@ -1,6 +1,6 @@
 from prompt_toolkit.shortcuts import choice
 
-from config import settings
+from kanban_cli.config import settings
 
 
 class StatusPrompt:

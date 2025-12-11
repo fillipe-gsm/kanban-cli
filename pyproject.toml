@@ -19,7 +19,7 @@ Repository = "https://github.com/fillipe-gsm/kanban-cli"
 Issues = "https://github.com/fillipe-gsm/kanban-cli/issues"
 
 [project.scripts]
-kanban-cli = "kanban_cli.main:main"
+kanban-cli = "kanban_cli.app.app:run_app"
 
 [dependency-groups]
 dev = [
