@@ -257,4 +257,4 @@ uv run ty check
 uv run pytest --cov=. --cov-fail-under=95 tests/
 ----
 
-Worst case, the CI will warn you if any of these conditions are not safistied.
+Worst case, the CI will warn you if any of these conditions are not satisfied.
