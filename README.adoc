@@ -16,7 +16,7 @@ The recommended way is to use https://pypi.org/project/pipx/[`pipx`], which inst
 
 [,sh]
 ----
-pipx install kanban-cli
+pipx install py-kanban-cli
 ----
 
 You also don't need sudo privileges here.
@@ -25,8 +25,14 @@ Alternatively, if you have a specific Python environment that is active, a simpl
 
 [,sh]
 ----
-pip install kanban-cli
+pip install py-kanban-cli
 ----
+
+[NOTE]
+--
+Despite the awkward name `py-kanban-cli`, after installed, the root command should be `kanban-cli` as shown below.
+--
+
 
 == Quickstart
 
