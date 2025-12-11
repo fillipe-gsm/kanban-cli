@@ -10,7 +10,8 @@ settings = Dynaconf(
     envvar_prefix="KB",
     settings_files=[
         current_path / "settings.toml",
-        ".secrets.toml",
+        current_path / ".secrets.toml",
+        # The user file should be in the user's current directory
         "kb_settings.toml",
     ],
 )
