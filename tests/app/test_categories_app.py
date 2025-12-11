@@ -14,7 +14,9 @@ def tst_app():
 
 
 def test_view_all(tst_app, tmp_db):
-    with patch("kanban_cli.categories.categories_app.view_all_controller") as m:
+    with patch(
+        "kanban_cli.categories.categories_app.view_all_controller"
+    ) as m:
         runner.invoke(tst_app, ["categories", "view-all"])
 
     # Add controller was called
