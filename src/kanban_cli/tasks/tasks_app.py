@@ -5,7 +5,9 @@ from kanban_cli.tasks.controllers.delete_controller import delete_controller
 from kanban_cli.tasks.controllers.edit_controller import edit_controller
 from kanban_cli.tasks.controllers.promote_controller import promote_controller
 from kanban_cli.tasks.controllers.regress_controller import regress_controller
-from kanban_cli.tasks.controllers.view_all_controller import view_all_controller
+from kanban_cli.tasks.controllers.view_all_controller import (
+    view_all_controller,
+)
 from kanban_cli.tasks.controllers.view_controller import view_controller
 
 

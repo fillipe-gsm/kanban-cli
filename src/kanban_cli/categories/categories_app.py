@@ -1,9 +1,13 @@
 from typer import Typer
 
 from kanban_cli.categories.controllers.add_controller import add_controller
-from kanban_cli.categories.controllers.delete_controller import delete_controller
+from kanban_cli.categories.controllers.delete_controller import (
+    delete_controller,
+)
 from kanban_cli.categories.controllers.edit_controller import edit_controller
-from kanban_cli.categories.controllers.view_all_controller import view_all_controller
+from kanban_cli.categories.controllers.view_all_controller import (
+    view_all_controller,
+)
 
 
 def create_app() -> Typer:

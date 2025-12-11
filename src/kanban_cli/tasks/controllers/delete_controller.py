@@ -1,4 +1,6 @@
-from kanban_cli.tasks.controllers.view_all_controller import view_all_controller
+from kanban_cli.tasks.controllers.view_all_controller import (
+    view_all_controller,
+)
 from kanban_cli.tasks.controllers.view_controller import view_controller
 from kanban_cli.tasks.models.task import Task
 from kanban_cli.tasks.presenters.no_task_presenter import NoTaskPresenter

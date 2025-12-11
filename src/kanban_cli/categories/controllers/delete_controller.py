@@ -1,9 +1,13 @@
-from kanban_cli.categories.controllers.view_all_controller import view_all_controller
+from kanban_cli.categories.controllers.view_all_controller import (
+    view_all_controller,
+)
 from kanban_cli.categories.models.category import Category
 from kanban_cli.categories.presenters.cannot_delete_category_presenter import (
     CannotDeleteCategoryPresenter,
 )
-from kanban_cli.categories.presenters.no_category_presenter import NoCategoryPresenter
+from kanban_cli.categories.presenters.no_category_presenter import (
+    NoCategoryPresenter,
+)
 from kanban_cli.tasks.models.task import Task
 from kanban_cli.tasks.prompts.confirm_prompt import ConfirmPrompt
 

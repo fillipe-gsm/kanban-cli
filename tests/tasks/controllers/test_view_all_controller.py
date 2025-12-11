@@ -2,7 +2,9 @@ from unittest.mock import patch
 
 import pytest
 
-from kanban_cli.tasks.controllers.view_all_controller import view_all_controller
+from kanban_cli.tasks.controllers.view_all_controller import (
+    view_all_controller,
+)
 from kanban_cli.tasks.models.task import Task
 from kanban_cli.tasks.presenters.no_tasks_presenter import NoTasksPresenter
 from kanban_cli.tasks.presenters.view_all_presenter import ViewAllPresenter
