@@ -228,7 +228,7 @@ The `db_name` is the only one that has a corresponding command line option with 
 
 [NOTE]
 --
-Keep in mind that you should avoid changing the configuration variables in existing files, as the tasks may have been created with the old configuration and you can get a unexpected behavior.
+Keep in mind that you should avoid changing the configuration variables in existing files, as the tasks may have been created with the old configuration and you can get an unexpected behavior.
 
 Hence, always start a new file if changing the configuration.
 --
