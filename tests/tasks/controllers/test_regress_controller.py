@@ -2,8 +2,8 @@ from unittest.mock import patch
 
 import pytest
 
-from src.tasks.controllers.regress_controller import regress_controller
-from src.tasks.models.task import Task
+from kanban_cli.tasks.controllers.regress_controller import regress_controller
+from kanban_cli.tasks.models.task import Task
 
 
 @pytest.fixture

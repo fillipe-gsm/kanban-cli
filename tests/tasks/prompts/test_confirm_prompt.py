@@ -1,4 +1,4 @@
-from src.tasks.prompts.confirm_prompt import ConfirmPrompt
+from kanban_cli.tasks.prompts.confirm_prompt import ConfirmPrompt
 from tests.tasks.prompts.key_mappings import KEY_MAPPINGS
 
 

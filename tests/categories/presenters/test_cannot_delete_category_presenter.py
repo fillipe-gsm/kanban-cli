@@ -2,7 +2,7 @@ from io import StringIO
 
 from rich.console import Console
 
-from src.categories.presenters.cannot_delete_category_presenter import (
+from kanban_cli.categories.presenters.cannot_delete_category_presenter import (
     CannotDeleteCategoryPresenter,
 )
 

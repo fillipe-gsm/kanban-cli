@@ -3,10 +3,10 @@ from unittest.mock import patch
 import pytest
 from typer.testing import CliRunner
 
-from src.app.app import create_app
-from src.tasks.models.task import Task
-from src.tasks.presenters.no_task_presenter import NoTaskPresenter
-from src.tasks.presenters.no_tasks_presenter import NoTasksPresenter
+from kanban_cli.app.app import create_app
+from kanban_cli.tasks.models.task import Task
+from kanban_cli.tasks.presenters.no_task_presenter import NoTaskPresenter
+from kanban_cli.tasks.presenters.no_tasks_presenter import NoTasksPresenter
 
 runner = CliRunner()
 

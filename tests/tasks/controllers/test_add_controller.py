@@ -2,9 +2,9 @@ from unittest.mock import patch
 
 import pytest
 
-from src.categories.models.category import Category
-from src.tasks.controllers.add_controller import add_controller
-from src.tasks.models.task import Task
+from kanban_cli.categories.models.category import Category
+from kanban_cli.tasks.controllers.add_controller import add_controller
+from kanban_cli.tasks.models.task import Task
 from tests.tasks.prompts.key_mappings import KEY_MAPPINGS
 
 

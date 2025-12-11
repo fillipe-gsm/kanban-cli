@@ -3,7 +3,7 @@ from unittest.mock import patch
 import pytest
 from typer.testing import CliRunner
 
-from src.app.app import create_app
+from kanban_cli.app.app import create_app
 
 runner = CliRunner()
 

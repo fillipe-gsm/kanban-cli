@@ -2,7 +2,7 @@ from io import StringIO
 
 from rich.console import Console
 
-from src.categories.presenters.no_categories_presenter import (
+from kanban_cli.categories.presenters.no_categories_presenter import (
     NoCategoriesPresenter,
 )
 

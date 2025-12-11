@@ -1,7 +1,7 @@
 import pytest
 
 from config import settings
-from src.tasks.prompts.title_prompt import TitlePrompt
+from kanban_cli.tasks.prompts.title_prompt import TitlePrompt
 from tests.tasks.prompts.key_mappings import KEY_MAPPINGS
 
 

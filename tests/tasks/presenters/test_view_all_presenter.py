@@ -3,9 +3,9 @@ from io import StringIO
 
 from rich.console import Console
 
-from src.categories.models.category import Category
-from src.tasks.models.task import Task
-from src.tasks.presenters.view_all_presenter import ViewAllPresenter
+from kanban_cli.categories.models.category import Category
+from kanban_cli.tasks.models.task import Task
+from kanban_cli.tasks.presenters.view_all_presenter import ViewAllPresenter
 
 
 def test_present(tmp_db):

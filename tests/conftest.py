@@ -6,8 +6,8 @@ from prompt_toolkit.application import create_app_session
 from prompt_toolkit.input import create_pipe_input
 from prompt_toolkit.output import DummyOutput
 
-from src.categories.models.category import Category
-from src.tasks.models.task import Task
+from kanban_cli.categories.models.category import Category
+from kanban_cli.tasks.models.task import Task
 
 TEST_DB = pw.SqliteDatabase(":memory:")
 MODELS = [Category, Task]

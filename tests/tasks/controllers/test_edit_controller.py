@@ -2,10 +2,10 @@ from unittest.mock import patch
 
 import pytest
 
-from src.categories.models.category import Category
-from src.tasks.controllers.edit_controller import edit_controller
-from src.tasks.models.task import Task
-from src.tasks.presenters.no_task_presenter import NoTaskPresenter
+from kanban_cli.categories.models.category import Category
+from kanban_cli.tasks.controllers.edit_controller import edit_controller
+from kanban_cli.tasks.models.task import Task
+from kanban_cli.tasks.presenters.no_task_presenter import NoTaskPresenter
 from tests.tasks.prompts.key_mappings import KEY_MAPPINGS
 
 
