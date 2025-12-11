@@ -3,9 +3,9 @@ from datetime import datetime
 import peewee as pw
 import pytest
 
-from config import settings
-from src.categories.models.category import Category
-from src.tasks.models.task import Task
+from kanban_cli.categories.models.category import Category
+from kanban_cli.config import settings
+from kanban_cli.tasks.models.task import Task
 
 
 def test_can_create_task_with_not_long_name(tmp_db):

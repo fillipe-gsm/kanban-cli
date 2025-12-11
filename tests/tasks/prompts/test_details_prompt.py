@@ -1,4 +1,4 @@
-from src.tasks.prompts.details_prompt import DetailsPrompt
+from kanban_cli.tasks.prompts.details_prompt import DetailsPrompt
 from tests.tasks.prompts.key_mappings import KEY_MAPPINGS
 
 

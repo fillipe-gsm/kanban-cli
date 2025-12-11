@@ -1,4 +1,4 @@
-from src.tasks.prompts.status_prompt import StatusPrompt
+from kanban_cli.tasks.prompts.status_prompt import StatusPrompt
 from tests.tasks.prompts.key_mappings import KEY_MAPPINGS
 
 

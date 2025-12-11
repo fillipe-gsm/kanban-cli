@@ -2,10 +2,10 @@ from io import StringIO
 
 from rich.console import Console
 
-from config import settings
-from src.categories.models.category import Category
-from src.tasks.models.task import Task
-from src.tasks.presenters.view_presenter import ViewPresenter
+from kanban_cli.categories.models.category import Category
+from kanban_cli.config import settings
+from kanban_cli.tasks.models.task import Task
+from kanban_cli.tasks.presenters.view_presenter import ViewPresenter
 
 
 def test_present(tmp_db):

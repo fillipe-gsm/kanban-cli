@@ -1,5 +1,5 @@
-from src.categories.models.category import Category
-from src.tasks.prompts.category_prompt import CategoryPrompt
+from kanban_cli.categories.models.category import Category
+from kanban_cli.tasks.prompts.category_prompt import CategoryPrompt
 from tests.tasks.prompts.key_mappings import KEY_MAPPINGS
 
 

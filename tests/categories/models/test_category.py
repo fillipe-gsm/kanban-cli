@@ -1,8 +1,8 @@
 import peewee as pw
 import pytest
 
-from config import settings
-from src.categories.models.category import Category
+from kanban_cli.categories.models.category import Category
+from kanban_cli.config import settings
 
 
 def test_can_create_valid_category(tmp_db):

@@ -2,7 +2,7 @@ from io import StringIO
 
 from rich.console import Console
 
-from src.tasks.presenters.no_task_presenter import NoTaskPresenter
+from kanban_cli.tasks.presenters.no_task_presenter import NoTaskPresenter
 
 
 def test_no_tasks_presenter():

@@ -1,4 +1,4 @@
-from src.tasks.prompts.priority_prompt import PriorityPrompt
+from kanban_cli.tasks.prompts.priority_prompt import PriorityPrompt
 from tests.tasks.prompts.key_mappings import KEY_MAPPINGS
 
 

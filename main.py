@@ -1,4 +1,4 @@
-from src.app.app import create_app
+from kanban_cli.app.app import create_app
 
 
 def main():

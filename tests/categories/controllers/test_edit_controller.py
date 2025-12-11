@@ -2,16 +2,18 @@ from unittest.mock import patch
 
 import pytest
 
-from src.categories.controllers.edit_controller import edit_controller
-from src.categories.models.category import Category
-from src.categories.presenters.no_category_presenter import NoCategoryPresenter
+from kanban_cli.categories.controllers.edit_controller import edit_controller
+from kanban_cli.categories.models.category import Category
+from kanban_cli.categories.presenters.no_category_presenter import (
+    NoCategoryPresenter,
+)
 from tests.tasks.prompts.key_mappings import KEY_MAPPINGS
 
 
 @pytest.fixture
 def mocked_view_all_controller():
     with patch(
-        "src.categories.controllers.edit_controller.view_all_controller"
+        "kanban_cli.categories.controllers.edit_controller.view_all_controller"
     ) as m:
         yield m
 

@@ -2,12 +2,16 @@ from unittest.mock import patch
 
 import pytest
 
-from src.categories.controllers.view_all_controller import view_all_controller
-from src.categories.models.category import Category
-from src.categories.presenters.no_categories_presenter import (
+from kanban_cli.categories.controllers.view_all_controller import (
+    view_all_controller,
+)
+from kanban_cli.categories.models.category import Category
+from kanban_cli.categories.presenters.no_categories_presenter import (
     NoCategoriesPresenter,
 )
-from src.categories.presenters.view_all_presenter import ViewAllPresenter
+from kanban_cli.categories.presenters.view_all_presenter import (
+    ViewAllPresenter,
+)
 
 
 @pytest.fixture
