@@ -30,7 +30,7 @@ kanban-cli --help
 
 and it will show all available options and commands.
 
-The most commont involve management of tasks and categories, which you can get more details with the folowing:
+The most common involve management of tasks and categories, which you can get more details with the following:
 
 ```sh
 kanban-cli tasks --help
