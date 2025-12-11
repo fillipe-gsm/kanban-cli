@@ -1,6 +1,6 @@
 [project]
 name = "py-kanban-cli"
-version = "0.1.1"
+version = "0.1.4"
 description = "Personal kanban management in command line"
 authors = [{name = "Fillipe Goulart", email="fillipe.gsm@tutanota.com"}]
 readme = "README_PYPI.md"
@@ -64,11 +64,19 @@ exclude_also = [
 ]
 
 [tool.hatch.build.targets.wheel]
-# “src” is the package directory relative to the project root
 packages = ["src"]
-# Optional: if you have data files you want bundled, list them here
-include = ["README.adoc", "settings.toml", "config.py", "LICENSE"]
 
+# Force top-level repo files into the wheel root so import config works.
+[tool.hatch.build.targets.wheel.force-include]
+"config.py" = "config.py"
+"settings.toml" = "settings.toml"
+"README.adoc" = "README.adoc"
+"README_PYPI.md" = "README_PYPI.md"
+"LICENSE" = "LICENSE"
+
+# ----------------------------------------------------------------------
+# Build system – unchanged
+# ----------------------------------------------------------------------
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
