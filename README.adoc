@@ -2,16 +2,15 @@
 
 :author: Fillipe Goulart
 :email: fillipe.gsm@tutanota.com
+:imagesdir: media
 :toc-title: Kanban cli management
 :toc:
 
 This is a command-line tool to manage simple kanban boards.
 
-TODO: add a gif with the feature working.
+image::demo.gif[]
 
 == Installation
-
-TODO: still not uploaded to pypi as it is in alpha version.
 
 The recommended way is to use https://pypi.org/project/pipx/[`pipx`], which installs the software in a separate Python environment automatically without you needing to worry about Python at all:
 
@@ -200,7 +199,7 @@ Examples considering a `bash` compatible shell:
 
 [NOTE]
 --
-Of course, different shells may have different ways of assigning these variables (e.g., `fish` shell requires us to write `set -x KB_TASK__TITLE_MAX_LENGTH 100`). Check your shell for that option.
+Of course, different shells may have different ways of assigning these variables (e.g., `fish` shell requires us to write `set -x KB_TASK__TITLE_MAX_LENGTH 100`). Check your shell.
 --
 
 If you change only some variables, the others will retain their default values.
@@ -220,7 +219,7 @@ statuses = ["Backlog", "Doing", "Done"]
 
 and, as before, unset variables retain their default values.
 
-Keep in mind that, if you use both approaches at the same time, the environment variables take precedence.
+Notice that, if you use both approaches at the same time, the environment variables take precedence.
 
 [TIP]
 --
@@ -229,9 +228,9 @@ The `db_name` is the only one that has a corresponding command line option with 
 
 [NOTE]
 --
-Keep in mind that you should avoid changing the config files to existing files, as the tasks may have been created with the old configuration.
+Keep in mind that you should avoid changing the configuration variables in existing files, as the tasks may have been created with the old configuration and you can get a unexpected behavior.
 
-Hence, always start a new tasks file if changing the configuration.
+Hence, always start a new file if changing the configuration.
 --
 
 
@@ -239,7 +238,7 @@ Hence, always start a new tasks file if changing the configuration.
 
 The library uses https://github.com/astral-sh/uv[`uv`] as project manager. Make sure it is installed in your system.
 
-Then, install all dependencies with:
+After cloning the repo, install all dependencies with:
 
 [,sh]
 ----
@@ -257,3 +256,5 @@ uv run ty check
 # All tests pass with at least 95% coverage
 uv run pytest --cov=. --cov-fail-under=95 tests/
 ----
+
+Worst case, the CI will warn you if any of these conditions are not safistied.
